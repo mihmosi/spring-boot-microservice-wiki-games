@@ -13,7 +13,7 @@
 	<name>spring-boot-microservices-wiki-games</name>
 
 	<modules>
-		<module>veral-item</module>
+		<module>general-item</module>
 	</modules>
 
 
