@@ -1,7 +1,7 @@
 package com.jm.wikigames.generalitem.controller;
 
 import com.jm.wikigames.generalitem.model.GeneralItemGame;
-import com.jm.wikigames.generalitem.repository.GeneralItemGameRepository;
+import com.jm.wikigames.generalitem.services.GeneralItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,17 +14,17 @@ import java.util.List;
 @RequestMapping("/api")
 public class GeneralItemController {
 
-    private GeneralItemGameRepository generalItemGameRepository;
+    private GeneralItemService generalItemService;
 
     @Autowired
-    public GeneralItemController(GeneralItemGameRepository generalItemGameRepository) {
-        this.generalItemGameRepository = generalItemGameRepository;
+    public GeneralItemController(GeneralItemService generalItemService) {
+        this.generalItemService = generalItemService;
     }
 
     @PostMapping("/items")
     public String addItem(@RequestBody GeneralItemGame generalItemGame){
         try {
-            generalItemGame.addItem(generalItemGame);
+            generalItemService.addItem(generalItemGame);
             return "Item " + generalItemGame.getItemName() + " added successfully";
         } catch (SQLIntegrityConstraintViolationException ex) {
             return "Item " + generalItemGame.getItemName() + " not add, item exists";
@@ -34,8 +34,8 @@ public class GeneralItemController {
     @PutMapping("/items")
     public String updateItem(@RequestBody GeneralItemGame generalItemGame){
         try {
-            GeneralItemGame generalItemGame = generalItemGameRepository.findItemById(generalItemGame.GetId());
-            generalItemGameRepository.updateItem(generalItemGame);
+            GeneralItemGame generalItemGame = generalItemService.findItemById(generalItemGame.GetId());
+            generalItemService.updateItem(generalItemGame);
             return "Item " + generalItemGame.getItemName() + " update successfully";
         } catch (EntityNotFoundException ex){
             return "Item witch id: " + generalItemGame.toString() + " not found";
@@ -44,14 +44,14 @@ public class GeneralItemController {
 
     @GetMapping("/items")
     public List<GeneralItemGame> getAllItems(){
-        List<GeneralItemGame> allItems = generalItemGameRepository.getAllItems();
+        List<GeneralItemGame> allItems = generalItemService.getAllItems();
         return allItems;
     }
 
     @GetMapping("/items/{id}")
     public GeneralItemGame findItemById(@PathVariable long id){
         try{
-            GeneralItemGame generalItemGame = generalItemGameRepository.findItemById(id);
+            GeneralItemGame generalItemGame = generalItemService.findItemById(id);
             return generalItemGame;
         } catch (EntityNotFoundException ex){
             return null;
@@ -61,8 +61,8 @@ public class GeneralItemController {
     @DeleteMapping("/items/{id}")
     public String deleteItemById(@PathVariable long id){
         try {
-            GeneralItemGame generalItemGame = generalItemGameRepository.findItemById(id);
-            generalItemGameRepository.deleteItem(generalItemGame);
+            GeneralItemGame generalItemGame = generalItemService.findItemById(id);
+            generalItemService.deleteItem(generalItemGame);
             return "Item " + generalItemGame.getItemName() + " delete successfully";
         } catch (EntityNotFoundException ex){
             return "Item witch id: " + id + "not found";
