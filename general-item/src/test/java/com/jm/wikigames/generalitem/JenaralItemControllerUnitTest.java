@@ -71,7 +71,7 @@ public class JenaralItemControllerUnitTest {
     }
 
     @Test
-    public void itemGame_dgivenAll() throws Exception {
+    public void itemGame_givenAll() throws Exception {
         GeneralItemGame itemGame = new GeneralItemGame();
         itemGame.setName("warcraft");
         itemGame.setGenre("strategy");

@@ -38,7 +38,7 @@ public class GeneralItemController {
     @GetMapping("/items/{name}")
     public ResponseEntity<GeneralItemGame> findItemByName(@PathVariable String name){
         try{
-            GeneralItemGame generalItemGame = generalItemService.findItemByName(name);
+            GeneralItemGame generalItemGame = generalItemService.getByName(name);
             return ResponseEntity.ok().body(generalItemGame);
         } catch (EntityNotFoundException ex){
             return ResponseEntity.notFound().build();
@@ -48,8 +48,8 @@ public class GeneralItemController {
     @DeleteMapping("/items/{name}")
     public ResponseEntity<GeneralItemGame> deleteItemByName(@PathVariable String name){
         try {
-            Optional<GeneralItemGame> generalItemGame = generalItemService.findItemByName(name);
-            generalItemService.delete(generalItemGame.get());
+            Optional<GeneralItemGame> generalItemGame = generalItemService.getByName(name);
+            generalItemService.delete(generalItemGame.getByName());
             return ResponseEntity.ok().body(generalItemGame.get());
         } catch (EntityNotFoundException ex){
             return ResponseEntity.notFound().build();
