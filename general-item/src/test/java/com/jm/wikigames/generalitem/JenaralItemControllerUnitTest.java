@@ -42,7 +42,7 @@ public class JenaralItemControllerUnitTest {
                 .andExpect(status().isCreated())
                 .andExpect(content().json(objectMapper.writeValueAsString(itemGame)))
                 .andExpect(jsonPath("$.name").value("warcraft"))
-                .andExpect(jsonPath("$.genre").value("Michail"));
+                .andExpect(jsonPath("$.genre").value("strategy"));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class JenaralItemControllerUnitTest {
                 get("/api/items/warcraft"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("warcraft"))
-                .andExpect(jsonPath("$.genre").value("Michail"));
+                .andExpect(jsonPath("$.genre").value("strategy"));
     }
 
     @Test
