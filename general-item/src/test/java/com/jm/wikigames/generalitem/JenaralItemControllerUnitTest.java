@@ -3,6 +3,7 @@ package com.jm.wikigames.generalitem;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jm.wikigames.generalitem.model.GeneralItemGame;
 import com.jm.wikigames.generalitem.repository.GeneralItemGameRepository;
+import com.jm.wikigames.generalitem.services.GeneralItemService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +27,14 @@ public class JenaralItemControllerUnitTest {
     @Autowired
     private ObjectMapper objectMapper;
     @MockBean
-    private GeneralItemGameRepository repository;
+    private GeneralItemService itemService;
 
     @Test
     public void itemGame_whenAdd() throws Exception {
         GeneralItemGame itemGame = new GeneralItemGame();
         itemGame.setName("warcraft");
         itemGame.setGenre("strategy");
-        Mockito.when(repository.save(Mockito.any())).thenReturn(itemGame));
+        Mockito.when(itemService.create(Mockito.any())).thenReturn(itemGame));
         mockMvc.perform(
                 post("/api/items")
                         .content(objectMapper.writeValueAsString(itemGame))
@@ -50,7 +51,7 @@ public class JenaralItemControllerUnitTest {
         GeneralItemGame itemGame = new GeneralItemGame();
         itemGame.setName("warcraft");
         itemGame.setGenre("strategy");
-        Mockito.when(repository.findByName(Mockito.any())).thenReturn(Optional.of(itemGame));
+        Mockito.when(itemService.getByName(Mockito.any())).thenReturn(Optional.of(itemGame));
         mockMvc.perform(
                 get("/api/items/warcraft"))
                 .andExpect(status().isOk())
@@ -63,7 +64,7 @@ public class JenaralItemControllerUnitTest {
         GeneralItemGame itemGame = new GeneralItemGame();
         itemGame.setName("warcraft");
         itemGame.setGenre("strategy");
-        Mockito.when(repository.findByName(Mockito.any())).thenReturn(Optional.of(itemGame));
+        Mockito.when(itemService.getByName(Mockito.any())).thenReturn(Optional.of(itemGame));
         mockMvc.perform(
                 delete("/api/items/warcraft"))
                 .andExpect(status().isOk());
@@ -77,7 +78,7 @@ public class JenaralItemControllerUnitTest {
         GeneralItemGame itemGame1 = new GeneralItemGame();
         itemGame.setName("gta5");
         itemGame.setGenre("action");
-        Mockito.when(repository.findAll()).thenReturn(Arrays.asList(itemGame, itemGame1));
+        Mockito.when(itemService.getAllItems()).thenReturn(Arrays.asList(itemGame, itemGame1));
         mockMvc.perform(
                 get("/api/items"))
                 .andExpect(status().isOk())
