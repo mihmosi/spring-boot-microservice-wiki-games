@@ -19,9 +19,9 @@ public class GeneralItemServiceImpl implements GeneralItemService {
 
     @Override
     @Transactional
-    public Long create(GeneralItemGame item) {
+    public GeneralItemGame create(GeneralItemGame item) {
         generalItemGameRepository.save(item);
-        return item.getId();
+        return item;
     }
 
     @Override
@@ -33,8 +33,8 @@ public class GeneralItemServiceImpl implements GeneralItemService {
     @Override
     @Transactional(readOnly = true)
     public GeneralItemGame getByName(String name) {
-        GeneralItemGame item =  generalItemGameRepository.findByName(name);
-        if(item == null) {
+        GeneralItemGame item = generalItemGameRepository.findByName(name);
+        if (item == null) {
             throw new EntityNotFoundException();
         }
         return item;

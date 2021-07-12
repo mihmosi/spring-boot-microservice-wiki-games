@@ -5,7 +5,7 @@ import com.jm.wikigames.generalitem.model.GeneralItemGame;
 import java.util.List;
 
 public interface GeneralItemService {
-    Long create(GeneralItemGame item);
+    GeneralItemGame create(GeneralItemGame item);
 
     List<GeneralItemGame> getAllItems();
 
