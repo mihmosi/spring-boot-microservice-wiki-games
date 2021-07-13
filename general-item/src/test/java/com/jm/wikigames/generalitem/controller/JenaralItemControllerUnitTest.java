@@ -1,4 +1,4 @@
-package com.jm.wikigames.generalitem;
+package com.jm.wikigames.generalitem.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jm.wikigames.generalitem.model.GeneralItemGame;
