@@ -11,5 +11,7 @@ public interface GeneralItemService {
 
     GeneralItemGame getByName(String name);
 
+    GeneralItemGame getById(Long id);
+
     void delete(Long id);
 }

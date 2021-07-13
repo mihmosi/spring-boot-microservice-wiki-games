@@ -1,7 +1,8 @@
-package com.jm.wikigames.generalitem.services;
+package com.jm.wikigames.generalitem.services.impl;
 
 import com.jm.wikigames.generalitem.model.GeneralItemGame;
 import com.jm.wikigames.generalitem.repository.GeneralItemGameRepository;
+import com.jm.wikigames.generalitem.services.GeneralItemService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,11 +34,13 @@ public class GeneralItemServiceImpl implements GeneralItemService {
     @Override
     @Transactional(readOnly = true)
     public GeneralItemGame getByName(String name) {
-        GeneralItemGame item = generalItemGameRepository.findByName(name);
-        if (item == null) {
-            throw new EntityNotFoundException();
-        }
-        return item;
+        return generalItemGameRepository.findByName(name).orElseThrow(() -> new EntityNotFoundException());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public GeneralItemGame getById(Long id) {
+        return generalItemGameRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
     }
 
     @Override
