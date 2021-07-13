@@ -24,35 +24,33 @@ public class GeneralItemController {
     }
 
     @PostMapping("/items")
-    public ResponseEntity<GeneralItemGame> addItem(@RequestBody GeneralItemGame generalItemGame){
-        GeneralItemGame body = generalItemService.create(generalItemGame);
-        return ResponseEntity.status(201).body(body);
+    public GeneralItemGame addItem(@RequestBody GeneralItemGame generalItemGame){
+        GeneralItemGame request = generalItemService.create(generalItemGame);
+        return request;
     }
 
     @GetMapping("/items")
-    public ResponseEntity<List<GeneralItemGame>> getAllItems(){
+    public List<GeneralItemGame> getAllItems(){
         List<GeneralItemGame> allItems = generalItemService.getAllItems();
-        return ResponseEntity.ok().body(allItems);
+        return allItems;
     }
 
-    @GetMapping("/items/{name}")
-    public ResponseEntity<GeneralItemGame> findItemByName(@PathVariable String name){
-        try{
-            GeneralItemGame generalItemGame = generalItemService.getByName(name);
-            return ResponseEntity.ok().body(generalItemGame);
-        } catch (EntityNotFoundException ex){
-            return ResponseEntity.notFound().build();
-        }
+    @GetMapping("/items/byName/{name}")
+    public GeneralItemGame findItemByName(@PathVariable String name){
+        GeneralItemGame generalItemGame = generalItemService.getByName(name);
+        return generalItemGame;
+    }
+
+    @GetMapping("/items/byId/{id}")
+    public GeneralItemGame findItemId(@PathVariable String id){
+        GeneralItemGame generalItemGame = generalItemService.getById(id);
+        return generalItemGame;
     }
 
     @DeleteMapping("/items/{name}")
-    public ResponseEntity<GeneralItemGame> deleteItemByName(@PathVariable String name){
-        try {
-            Optional<GeneralItemGame> generalItemGame = generalItemService.getByName(name);
-            generalItemService.delete(generalItemGame.getByName());
-            return ResponseEntity.ok().body(generalItemGame.get());
-        } catch (EntityNotFoundException ex){
-            return ResponseEntity.notFound().build();
-        }
+    public GeneralItemGame deleteItemByName(@PathVariable String name){
+            GeneralItemGame generalItemGame = generalItemService.getByName(name);
+            generalItemService.delete(generalItemGame.getId());
+            return generalItemGame;
     }
 }

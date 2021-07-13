@@ -40,7 +40,6 @@ public class JenaralItemControllerUnitTest {
                         .content(objectMapper.writeValueAsString(itemGame))
                         .contentType(MediaType.APPLICATION_JSON)
         )
-                .andExpect(status().isCreated())
                 .andExpect(content().json(objectMapper.writeValueAsString(itemGame)))
                 .andExpect(jsonPath("$.name").value("warcraft"))
                 .andExpect(jsonPath("$.genre").value("strategy"));
@@ -53,8 +52,21 @@ public class JenaralItemControllerUnitTest {
         itemGame.setGenre("strategy");
         Mockito.when(itemService.getByName(Mockito.any())).thenReturn(Optional.of(itemGame));
         mockMvc.perform(
-                get("/api/items/warcraft"))
-                .andExpect(status().isOk())
+                get("/api/items/byName/warcraft"))
+                .andExpect(jsonPath("$.name").value("warcraft"))
+                .andExpect(jsonPath("$.genre").value("strategy"));
+    }
+
+    @Test
+    public void itemGame_getByIf() throws Exception {
+        GeneralItemGame itemGame = new GeneralItemGame();
+        itemGame.setId(3);
+        itemGame.setName("warcraft");
+        itemGame.setGenre("strategy");
+        Mockito.when(itemService.getByName(Mockito.any())).thenReturn(Optional.of(itemGame));
+        mockMvc.perform(
+                get("/api/items/byId/3"))
+                .andExpect(jsonPath("$.id").value(3))
                 .andExpect(jsonPath("$.name").value("warcraft"))
                 .andExpect(jsonPath("$.genre").value("strategy"));
     }
@@ -67,7 +79,8 @@ public class JenaralItemControllerUnitTest {
         Mockito.when(itemService.getByName(Mockito.any())).thenReturn(Optional.of(itemGame));
         mockMvc.perform(
                 delete("/api/items/warcraft"))
-                .andExpect(status().isOk());
+                .andExpect(jsonPath("$.name").value("warcraft"))
+                .andExpect(jsonPath("$.genre").value("strategy"));
     }
 
     @Test
@@ -81,7 +94,6 @@ public class JenaralItemControllerUnitTest {
         Mockito.when(itemService.getAllItems()).thenReturn(Arrays.asList(itemGame, itemGame1));
         mockMvc.perform(
                 get("/api/items"))
-                .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(Arrays.asList(itemGame, itemGame1))));
     }
 }
