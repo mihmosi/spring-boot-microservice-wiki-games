@@ -58,7 +58,7 @@ public class JenaralItemControllerUnitTest {
     }
 
     @Test
-    public void itemGame_getByIf() throws Exception {
+    public void itemGame_getById() throws Exception {
         GeneralItemGame itemGame = new GeneralItemGame();
         itemGame.setId(3);
         itemGame.setName("warcraft");
