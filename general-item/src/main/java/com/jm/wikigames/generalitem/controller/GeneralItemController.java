@@ -48,9 +48,7 @@ public class GeneralItemController {
     }
 
     @DeleteMapping("/items/{name}")
-    public GeneralItemGame deleteItemByName(@PathVariable String name){
-            GeneralItemGame generalItemGame = generalItemService.getByName(name);
-            generalItemService.delete(generalItemGame.getId());
-            return generalItemGame;
+    public void deleteItemByName(@PathVariable String name){
+            generalItemService.delete(generalItemService.getByName(name).getId());
     }
 }
