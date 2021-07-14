@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
 
 @Entity
 @Data
@@ -22,7 +21,7 @@ public class GeneralItemGame {
     @NonNull
     private String name;
     @NonNull
-    private Date dateOfCreation;
+    private String dateOfCreation;
     @NonNull
     private String genre;
     @NonNull
