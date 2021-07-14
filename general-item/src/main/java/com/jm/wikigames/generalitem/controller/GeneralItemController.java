@@ -18,7 +18,6 @@ public class GeneralItemController {
 
     private GeneralItemService generalItemService;
 
-    @Autowired
     public GeneralItemController(GeneralItemService generalItemService) {
         this.generalItemService = generalItemService;
     }
@@ -35,13 +34,13 @@ public class GeneralItemController {
         return allItems;
     }
 
-    @GetMapping("/items/byName/{name}")
+    @GetMapping("/items/{name}")
     public GeneralItemGame findItemByName(@PathVariable String name){
         GeneralItemGame generalItemGame = generalItemService.getByName(name);
         return generalItemGame;
     }
 
-    @GetMapping("/items/byId/{id}")
+    @GetMapping("/items/{id}")
     public GeneralItemGame findItemId(@PathVariable String id){
         GeneralItemGame generalItemGame = generalItemService.getById(id);
         return generalItemGame;
