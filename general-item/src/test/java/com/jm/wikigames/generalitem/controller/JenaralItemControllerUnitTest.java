@@ -65,7 +65,7 @@ public class JenaralItemControllerUnitTest {
         itemGame.setGenre("strategy");
         Mockito.when(itemService.getByName(Mockito.any())).thenReturn(Optional.of(itemGame));
         mockMvc.perform(
-                get("/api/items/byId/3"))
+                get("/api/items/3"))
                 .andExpect(jsonPath("$.id").value(3))
                 .andExpect(jsonPath("$.name").value("warcraft"))
                 .andExpect(jsonPath("$.genre").value("strategy"));
