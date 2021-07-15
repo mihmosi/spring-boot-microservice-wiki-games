@@ -32,7 +32,7 @@ public class Inside {
     @NonNull
     @OneToMany(fetch = FetchType.LAZY)
     @MapsId
-    @JoinColumn(name = "linorСharacter_id")
+    @JoinColumn(name = "minorСharacter_id")
     private List<MinorСharacter> minorСharacters;
 
     @NonNull
