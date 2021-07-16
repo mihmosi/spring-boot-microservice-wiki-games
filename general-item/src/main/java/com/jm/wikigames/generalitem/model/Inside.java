@@ -1,49 +1,58 @@
 package com.jm.wikigames.generalitem.model;
 
 
+import com.jm.wikigames.generalitem.model.enums.Genre;
 import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@RequiredArgsConstructor
 @NoArgsConstructor
-@AllArgsConstructor
 @Data
-@EqualsAndHashCode(of = {"id"})
+@Table(name = "inside")
 public class Inside {
+
+    public Inside(List<Protagonist> protagonists, List<Antagonist> antagonists, List<MinorСharacters> minorСharacters, List<Lore> lore, String originalSourse, Genre genre) {
+        this.protagonists = protagonists;
+        this.antagonists = antagonists;
+        this.minorСharacters = minorСharacters;
+        this.lore = lore;
+        this.originalSourse = originalSourse;
+        this.genre = genre;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NonNull
-    @OneToOne(fetch = FetchType.LAZY)
+    @Column(name = "protagonists")
+    @OneToMany(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "protagonist_id")
-    private Protagonist protagonist;
+    private List<Protagonist> protagonists;
 
-    @NonNull
-    @OneToOne(fetch = FetchType.LAZY)
+    @Column(name = "antagonist")
+    @OneToMany(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "antagonist_id")
-    private Antagonist antagonist;
+    private List<Antagonist> antagonists;
 
-    @NonNull
+    @Column(name = "minorСharacter")
     @OneToMany(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "minorСharacter_id")
-    private List<MinorСharacter> minorСharacters;
+    private List<MinorСharacters> minorСharacters;
 
-    @NonNull
-    @OneToOne(fetch = FetchType.LAZY)
+    @Column(name = "lore")
+    @OneToMany(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "lore_id")
-    private Lore lore;
+    private List<Lore> lore;
 
-    @NonNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "genre_id")
+    @Column(name = "originalSourse")
+    private String originalSourse;
+
+    @Column(name = "genre")
+    @Enumerated(EnumType.STRING)
     private Genre genre;
 }
