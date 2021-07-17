@@ -12,15 +12,6 @@ import javax.persistence.*;
 @Table(name = "inside")
 public class Inside {
 
-    public Inside(List<Protagonist> protagonists, List<Antagonist> antagonists, List<MinorСharacters> minorСharacters, List<Lore> lore, String originalSourse, Genre genre) {
-        this.protagonists = protagonists;
-        this.antagonists = antagonists;
-        this.minorСharacters = minorСharacters;
-        this.lore = lore;
-        this.originalSourse = originalSourse;
-        this.genre = genre;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
