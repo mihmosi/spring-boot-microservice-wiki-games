@@ -1,18 +1,13 @@
 package com.jm.wikigames.generalitem.model.characters;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
+
+import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "protagonists")
+@NoArgsConstructor
 public class Protagonist extends Character {
-
-	public Protagonist() {
-	}
-
-	public Protagonist(String name, String sex, String race, String faction) {
-		this.name = name;
-		this.sex = sex;
-		this.race = race;
-		this.faction = faction;
-	}
 
 }
