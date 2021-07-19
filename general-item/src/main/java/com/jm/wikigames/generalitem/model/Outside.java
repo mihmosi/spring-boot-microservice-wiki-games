@@ -12,9 +12,9 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 public class Outside {
 
     @Id
