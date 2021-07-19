@@ -41,7 +41,7 @@ public class GeneralItemController {
     }
 
     @GetMapping("/items/{id}")
-    public GeneralItemGame findItemId(@PathVariable String id){
+    public GeneralItemGame findItemById(@PathVariable Long id){
         GeneralItemGame generalItemGame = generalItemService.getById(id);
         return generalItemGame;
     }
