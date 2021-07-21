@@ -1,11 +1,10 @@
 package com.jm.wikigames.generalitem.model;
 
+import com.jm.wikigames.generalitem.converter.StatusEnumToStringConverter;
+import com.jm.wikigames.generalitem.model.enums.Status;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -24,4 +23,7 @@ public class GeneralItemGame {
     private String genre;
     private String heroes;
     private String villains;
+
+    @Convert(converter = StatusEnumToStringConverter.class)
+    private Status status;
 }
