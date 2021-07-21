@@ -34,7 +34,7 @@ public class JenaralItemControllerUnitTest {
         GeneralItemGame itemGame = new GeneralItemGame();
         itemGame.setName("warcraft");
         itemGame.setGenre("strategy");
-        Mockito.when(itemService.create(Mockito.any())).thenReturn(itemGame));
+        Mockito.when(itemService.create(Mockito.any())).thenReturn(itemGame);
         mockMvc.perform(
                 post("/api/items")
                         .content(objectMapper.writeValueAsString(itemGame))
@@ -50,9 +50,10 @@ public class JenaralItemControllerUnitTest {
         GeneralItemGame itemGame = new GeneralItemGame();
         itemGame.setName("warcraft");
         itemGame.setGenre("strategy");
-        Mockito.when(itemService.getByName(Mockito.any())).thenReturn(Optional.of(itemGame));
+        Mockito.when(itemService.getByName(Mockito.any())).thenReturn(itemGame);
         mockMvc.perform(
-                get("/api/items/byName/warcraft"))
+                get("/api/items/warcraft"))
+                .andExpect(content().json(objectMapper.writeValueAsString(itemGame)))
                 .andExpect(jsonPath("$.name").value("warcraft"))
                 .andExpect(jsonPath("$.genre").value("strategy"));
     }
@@ -60,28 +61,17 @@ public class JenaralItemControllerUnitTest {
     @Test
     public void itemGame_getById() throws Exception {
         GeneralItemGame itemGame = new GeneralItemGame();
-        itemGame.setId(3);
+        itemGame.setId((long) 3);
         itemGame.setName("warcraft");
         itemGame.setGenre("strategy");
-        Mockito.when(itemService.getByName(Mockito.any())).thenReturn(Optional.of(itemGame));
+        Mockito.when(itemService.getById(Mockito.any())).thenReturn(itemGame);
         mockMvc.perform(
                 get("/api/items/3"))
                 .andExpect(jsonPath("$.id").value(3))
                 .andExpect(jsonPath("$.name").value("warcraft"))
                 .andExpect(jsonPath("$.genre").value("strategy"));
     }
-
-    @Test
-    public void itemGame_delete() throws Exception {
-        GeneralItemGame itemGame = new GeneralItemGame();
-        itemGame.setName("warcraft");
-        itemGame.setGenre("strategy");
-        Mockito.when(itemService.getByName(Mockito.any())).thenReturn(Optional.of(itemGame));
-        mockMvc.perform(
-                delete("/api/items/warcraft"))
-                .andExpect(jsonPath("$.name").value("warcraft"))
-                .andExpect(jsonPath("$.genre").value("strategy"));
-    }
+    
 
     @Test
     public void itemGame_givenAll() throws Exception {
