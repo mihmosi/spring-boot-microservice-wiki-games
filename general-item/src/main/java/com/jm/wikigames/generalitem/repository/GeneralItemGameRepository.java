@@ -1,11 +1,12 @@
 package com.jm.wikigames.generalitem.repository;
 
-import java.util.List;
-
+import com.jm.wikigames.generalitem.model.GeneralItemGame;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.jm.wikigames.generalitem.model.GeneralItemGame;
+import java.util.Optional;
 
-public interface GeneralItemGameRepository extends JpaRepository<GeneralItemGame, Long>{
-	public List<GeneralItemGame> findByName(String name);
+public interface GeneralItemGameRepository extends JpaRepository<GeneralItemGame, Long> {
+
+    Optional<GeneralItemGame> findByName(String name);
+
 }
