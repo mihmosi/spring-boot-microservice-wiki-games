@@ -1,10 +1,13 @@
 package com.jm.wikigames.generalitem.model;
 
-
+import com.jm.wikigames.generalitem.model.characters.Antagonist;
+import com.jm.wikigames.generalitem.model.characters.MinorCharacter;
+import com.jm.wikigames.generalitem.model.characters.Protagonist;
 import com.jm.wikigames.generalitem.model.enums.Genre;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -18,27 +21,18 @@ public class Inside {
 
     @Column(name = "protagonists")
     @OneToMany(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "protagonist_id")
     private List<Protagonist> protagonists;
 
     @Column(name = "antagonist")
     @OneToMany(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "antagonist_id")
     private List<Antagonist> antagonists;
 
     @Column(name = "minorСharacter")
     @OneToMany(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "minorСharacter_id")
-    private List<MinorСharacters> minorСharacters;
+    private List<MinorCharacter> minorСharacters;
 
     @Column(name = "lore")
-    @OneToMany(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "lore_id")
-    private List<Lore> lore;
+    private String lore;
 
     @Column(name = "originalSourse")
     private String originalSourse;
