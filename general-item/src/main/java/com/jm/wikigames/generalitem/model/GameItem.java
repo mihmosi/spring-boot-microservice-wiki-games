@@ -12,13 +12,14 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "game_item", schema = "public")
+@Table(name = "game_item")
 public class GameItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Embedded
+    private Inside inside;
     @Convert(converter = StatusConverter.class)
-    @Column(name = "status")
     private Status status;
 }

@@ -1,49 +1,27 @@
 package com.jm.wikigames.generalitem.model;
 
+import com.jm.wikigames.generalitem.model.characters.Character;
+import com.jm.wikigames.generalitem.model.enums.InsideGenre;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import com.jm.wikigames.generalitem.model.enums.Genre;
-import lombok.*;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Transient;
+import java.util.List;
 
-import javax.persistence.*;
-
-@Entity
+@AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "inside")
+@Embeddable
 public class Inside {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "protagonists")
-    @OneToMany(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "protagonist_id")
-    private List<Protagonist> protagonists;
-
-    @Column(name = "antagonist")
-    @OneToMany(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "antagonist_id")
-    private List<Antagonist> antagonists;
-
-    @Column(name = "minorСharacter")
-    @OneToMany(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "minorСharacter_id")
-    private List<MinorСharacters> minorСharacters;
-
-    @Column(name = "lore")
-    @OneToMany(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "lore_id")
-    private List<Lore> lore;
-
-    @Column(name = "originalSourse")
-    private String originalSourse;
-
-    @Column(name = "genre")
-    @Enumerated(EnumType.STRING)
-    private Genre genre;
+    @Transient
+    private List<Character> characters;
+    @Column(table = "game_item")
+    private String lore;
+    @Transient
+    private String originalSource;
+    @Transient
+    private List<InsideGenre> genre;
 }

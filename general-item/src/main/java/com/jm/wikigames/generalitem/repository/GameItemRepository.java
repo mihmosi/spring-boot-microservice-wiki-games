@@ -4,5 +4,5 @@ import com.jm.wikigames.generalitem.model.GameItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GameItemRepository extends JpaRepository<GameItem, Long> {
-    GameItem getByName(String name);
+    GameItem findByName(String name);
 }

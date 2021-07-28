@@ -32,7 +32,7 @@ public class GameItemServiceImpl implements GameItemService {
     @Override
     @Transactional(readOnly = true)
     public GameItem getByName(String name) {
-        return gameItemRepository.getByName(name);
+        return gameItemRepository.findByName(name);
     }
 
     @Override
