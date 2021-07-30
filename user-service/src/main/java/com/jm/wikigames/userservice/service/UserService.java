@@ -1,4 +1,4 @@
-package com.jm.wikigames.generalitem.services;
+package com.jm.wikigames.userservice.service;
 
 import java.util.List;
 
