@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 @Data
@@ -18,14 +19,14 @@ import java.util.Date;
 public class Outside {
 
     @Enumerated(EnumType.STRING)
-    private Platform platform;
+    private List<Platform> platform;
 
     private Date releaseDate;
 
     private String distributor;
 
     @Enumerated(EnumType.STRING)
-    private Genre genre;
+    private List<Genre> InsideGenre;
 
     private String developer;
 
@@ -34,5 +35,5 @@ public class Outside {
     private String systemRequirements;
 
     @Enumerated(EnumType.STRING)
-    private GameMode gameMode;
+    private List<GameMode> gameMode;
 }
