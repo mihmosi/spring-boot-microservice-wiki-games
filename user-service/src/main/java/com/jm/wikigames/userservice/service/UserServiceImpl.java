@@ -1,6 +1,6 @@
-package com.jm.wikigames.generalitem.services.impl;
+package com.jm.wikigames.userservice.service;
 
-import com.jm.wikigames.generalitem.services.UserService;
+import com.jm.wikigames.userservice.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
