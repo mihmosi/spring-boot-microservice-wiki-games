@@ -8,4 +8,8 @@ public enum Status {
     PRODUCTION("В разработке");
 
     private final String value;
+
+    public String getValue() {
+        return this.value;
+    }
 }

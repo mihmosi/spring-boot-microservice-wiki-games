@@ -17,8 +17,8 @@ public class GameItemController {
 	}
 
 	@PostMapping("/items")
-	public GameItem addItem(@RequestBody GameItem generalItemGame) {
-		return gameItemRepository.create(generalItemGame);
+	public GameItem addItem(@RequestBody GameItem gameItem) {
+		return gameItemRepository.create(gameItem);
 	}
 
 	@GetMapping("/items")

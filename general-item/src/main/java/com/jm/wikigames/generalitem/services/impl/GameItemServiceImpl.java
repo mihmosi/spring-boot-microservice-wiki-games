@@ -38,7 +38,7 @@ public class GameItemServiceImpl implements GameItemService {
     @Override
     @Transactional(readOnly = true)
     public GameItem getById(Long id) {
-        return gameItemRepository.getById(id);
+        return gameItemRepository.findById(id).get();
     }
 
     @Override

@@ -1,50 +1,51 @@
 //package com.jm.wikigames.generalitem.controller;
 //
 //import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.jm.wikigames.generalitem.model.GeneralItemGame;
-//import com.jm.wikigames.generalitem.repository.GeneralItemGameRepository;
-//import com.jm.wikigames.generalitem.services.GeneralItemService;
+//import com.jm.wikigames.generalitem.converter.Status;
+//import com.jm.wikigames.generalitem.model.GameItem;
+//import com.jm.wikigames.generalitem.services.GameItemService;
 //import org.junit.jupiter.api.Test;
+//import org.junit.runner.RunWith;
 //import org.mockito.Mockito;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 //import org.springframework.boot.test.mock.mockito.MockBean;
 //import org.springframework.http.MediaType;
+//import org.springframework.test.context.junit4.SpringRunner;
 //import org.springframework.test.web.servlet.MockMvc;
 //
-//import javax.persistence.EntityNotFoundException;
+//import static org.mockito.ArgumentMatchers.any;
+//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 //
-//import java.util.Arrays;
-//import java.util.Optional;
+//@RunWith(SpringRunner.class)
+//@WebMvcTest(GameItemController.class)
+//public class GameItemControllerTest {
 //
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+//    @MockBean
+//    private GameItemService itemService;
 //
-//@WebMvcTest
-//public class JenaralItemControllerUnitTest {
-//    @Autowired
-//    private MockMvc mockMvc;
 //    @Autowired
 //    private ObjectMapper objectMapper;
-//    @MockBean
-//    private GeneralItemService itemService;
+//
+//    @Autowired
+//    private MockMvc mockMvc;
 //
 //    @Test
 //    public void itemGame_whenAdd() throws Exception {
-//        GeneralItemGame itemGame = new GeneralItemGame();
+//        GameItem itemGame = new GameItem();
 //        itemGame.setName("warcraft");
-//        itemGame.setGenre("strategy");
-//        Mockito.when(itemService.create(Mockito.any())).thenReturn(itemGame);
-//        mockMvc.perform(
-//                post("/api/items")
-//                        .content(objectMapper.writeValueAsString(itemGame))
-//                        .contentType(MediaType.APPLICATION_JSON)
-//        )
+//        itemGame.setStatus(Status.REALISE);
+//        Mockito.when(itemService.create(any(GameItem.class))).thenReturn(itemGame);
+//        mockMvc.perform(post("/api/items")
+//                .content(objectMapper.writeValueAsString(itemGame))
+//                .contentType(MediaType.APPLICATION_JSON))
 //                .andExpect(content().json(objectMapper.writeValueAsString(itemGame)))
 //                .andExpect(jsonPath("$.name").value("warcraft"))
-//                .andExpect(jsonPath("$.genre").value("strategy"));
+//                .andExpect(jsonPath("$.status").value(Status.REALISE));
 //    }
-//
+
 //    @Test
 //    public void itemGame_getByName() throws Exception {
 //        GeneralItemGame itemGame = new GeneralItemGame();
