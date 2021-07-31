@@ -1,6 +1,6 @@
 package com.jm.wikigames.generalitem.services.impl;
 
-import com.jm.wikigames.generalitem.modelЫ.GeneralItemGame;
+import com.jm.wikigames.generalitem.model.GeneralItemGame;
 import com.jm.wikigames.generalitem.repository.GeneralItemGameRepository;
 import com.jm.wikigames.generalitem.services.GeneralItemService;
 import org.springframework.stereotype.Service;
