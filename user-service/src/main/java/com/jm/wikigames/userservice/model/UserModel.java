@@ -1,4 +1,4 @@
-package com.jm.wikigames.generalitem.model;
+package com.jm.wikigames.userservice.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
