@@ -1,4 +1,4 @@
-package com.jm.wikigames.generalitem.model;
+package com.jm.wikigames.userservice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
