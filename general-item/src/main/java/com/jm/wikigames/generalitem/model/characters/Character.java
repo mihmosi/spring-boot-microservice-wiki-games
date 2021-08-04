@@ -1,31 +1,27 @@
 package com.jm.wikigames.generalitem.model.characters;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import com.jm.wikigames.generalitem.model.enums.CharacterStatus;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import javax.persistence.*;
 
-@Getter
-@Setter
-@MappedSuperclass
-public abstract class Character {
-	@Id
-	@Setter(value = AccessLevel.NONE)
-	long id;
-	
-	@Column(name = "name")
-	String name;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "character")
+public class Character {
 
-	@Column(name = "sex")
-	String sex;
-
-	@Column(name = "race")
-	String race;
-
-	@Column(name = "faction")
-	String faction;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    @Enumerated(EnumType.STRING)
+    private CharacterStatus status;
+    private String sex;
+    private String race;
+    private String faction;
 
 }
