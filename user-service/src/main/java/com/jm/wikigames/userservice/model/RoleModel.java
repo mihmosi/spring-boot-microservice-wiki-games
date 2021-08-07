@@ -1,4 +1,4 @@
-package com.jm.wikigames.generalitem.model;
+package com.jm.wikigames.userservice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
