@@ -13,9 +13,9 @@ code {
 }
 
 .baseWrapper {
-  padding-top: 5rem;
+  padding-top: 2rem;
   margin: 0 auto;
-  width: 450px;
+  width: 85%;
 }
 
 li.items {
@@ -46,4 +46,57 @@ input.items {
 
 .addItem_input {
   margin-top: 1rem;
+}
+
+.table {
+	width: 100%;
+	margin-bottom: 10px;
+  margin-top: 10px;
+	border: 5px solid #fff;
+	border-top: 5px solid #fff;
+	border-bottom: 3px solid #fff;
+	border-collapse: collapse;
+	outline: 3px solid #9ca2f3;
+	font-size: 15px;
+	background: #fff!important;
+}
+.table th {
+	font-weight: bold;
+	padding: 7px;
+	background: #9ca2f3;
+	border: none;
+	text-align: left;
+	font-size: 15px;
+	border-top: 3px solid #fff;
+	border-bottom: 3px solid #9ca2f3;
+}
+.table td {
+	padding: 7px;
+	border: none;
+	border-top: 3px solid #fff;
+	border-bottom: 3px solid #fff;
+	font-size: 15px;
+}
+.table tbody tr:nth-child(even){
+	background: #f8f8f8!important;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  padding-top: 5rem;
+}
+
+.modal-body {
+  padding: 2rem;
+  width: 400px;
+  border-radius: 5px;
+  background: #fff;
+  height: 200px;
 }

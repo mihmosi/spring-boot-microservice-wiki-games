@@ -1,6 +1,6 @@
 {
-  "short_name": "Front App",
-  "name": "Frontend app",
+  "short_name": "Wiki-Games",
+  "name": "Wiki-Games",
   "icons": [
     {
       "src": "./static/img/favicon.ico",
