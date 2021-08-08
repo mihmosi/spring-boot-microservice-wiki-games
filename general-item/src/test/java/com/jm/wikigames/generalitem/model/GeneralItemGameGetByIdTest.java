@@ -9,8 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
-
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -28,7 +26,7 @@ public class GeneralItemGameGetByIdTest {
         game.setId(1L);
         game.setName("Last Guardian");
 
-        when(repository.findById(1L)).thenReturn(Optional.of(game));
+        when(repository.getById(1L)).thenReturn(game);
         GeneralItemGame test = service.getById(1L);
         Assertions.assertEquals(test,game);
     }
