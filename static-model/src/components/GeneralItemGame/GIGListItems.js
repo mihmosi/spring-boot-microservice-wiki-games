@@ -38,7 +38,8 @@ export default class GIGListItems extends React.Component {
   }
 
   getItems() {
-    fetch("http://localhost:8080/api/items", {
+    // fetch("http://localhost:8080/api/items",
+    fetch("/api/items", {
       method: "GET",
     })
       .then(this.fetchStatus)
@@ -60,7 +61,8 @@ export default class GIGListItems extends React.Component {
   }
 
   addItemApply() {
-    fetch("http://localhost:8080/api/items", {
+    // fetch("http://localhost:8080/api/items", {
+    fetch("/api/items", {
       headers: {
         "Content-Type": "application/json",
       },
@@ -91,7 +93,8 @@ export default class GIGListItems extends React.Component {
   }
 
   editItemApply() {
-    fetch("http://localhost:8080/api/items", {
+    // fetch("http://localhost:8080/api/items", {
+    fetch("/api/items", {
       headers: {
         "Content-Type": "application/json",
       },
@@ -154,7 +157,8 @@ export default class GIGListItems extends React.Component {
   }
 
   delItem(id) {
-    fetch("http://localhost:8080/api/items/" + id, {
+    // fetch("http://localhost:8080/api/items/" + id, {
+    fetch("/api/items/" + id, {
       headers: {
         "Content-Type": "application/json",
       },
