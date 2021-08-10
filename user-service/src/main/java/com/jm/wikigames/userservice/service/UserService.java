@@ -1,9 +1,13 @@
 package com.jm.wikigames.userservice.service;
 
+import com.jm.wikigames.userservice.model.UserModel;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 public interface UserService {
 
+    @Transactional
     UserModel create(UserModel userModel);
 
     List<UserModel> getAllUsers();
