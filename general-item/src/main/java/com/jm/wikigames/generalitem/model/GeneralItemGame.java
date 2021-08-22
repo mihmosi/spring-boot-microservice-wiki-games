@@ -12,6 +12,7 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"id","name"})
+@Builder
 public class GeneralItemGame {
 
     @Id
