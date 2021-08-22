@@ -12,7 +12,7 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"id","name"})
-public class GeneralItemGame {
+public class GameItemGame {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -3,11 +3,11 @@ package com.jm.wikigames.generalitem.model;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class GeneralItemGameTest {
+public class GameItemGameTest {
 
     @Test
     public void test_GeneralItemGame() {
-        GeneralItemGame game = new GeneralItemGame();
+        GameItemGame game = new GameItemGame();
         game.setId(1L);
         game.setName("Bloodborne");
         game.setDateOfCreation("14.07.2021");

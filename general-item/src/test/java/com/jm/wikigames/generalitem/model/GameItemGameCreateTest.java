@@ -1,7 +1,7 @@
 package com.jm.wikigames.generalitem.model;
 
-import com.jm.wikigames.generalitem.repository.GeneralItemGameRepository;
-import com.jm.wikigames.generalitem.services.impl.GeneralItemServiceImpl;
+import com.jm.wikigames.generalitem.repository.GameItemGameRepository;
+import com.jm.wikigames.generalitem.services.impl.GameItemServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,21 +12,21 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class GeneralItemGameCreateTest {
+public class GameItemGameCreateTest {
 
     @Mock
-    private GeneralItemGameRepository repository;
+    private GameItemGameRepository repository;
 
     @InjectMocks
-    private GeneralItemServiceImpl service;
+    private GameItemServiceImpl service;
 
     @Test
     void createGeneralItemGame(){
-        GeneralItemGame game = new GeneralItemGame();
+        GameItemGame game = new GameItemGame();
 
-        when(repository.save(any(GeneralItemGame.class))).thenReturn(game);
+        when(repository.save(any(GameItemGame.class))).thenReturn(game);
 
-        GeneralItemGame savedGame = service.create(game);
+        GameItemGame savedGame = service.create(game);
 
         Assertions.assertEquals(savedGame,game);
     }

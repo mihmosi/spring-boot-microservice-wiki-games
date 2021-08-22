@@ -1,9 +1,8 @@
 package com.jm.wikigames.generalitem.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jm.wikigames.generalitem.model.GeneralItemGame;
-import com.jm.wikigames.generalitem.repository.GeneralItemGameRepository;
-import com.jm.wikigames.generalitem.services.GeneralItemService;
+import com.jm.wikigames.generalitem.model.GameItemGame;
+import com.jm.wikigames.generalitem.services.GameItemService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import javax.persistence.EntityNotFoundException;
-
 import java.util.Arrays;
-import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -27,11 +23,11 @@ public class JenaralItemControllerUnitTest {
     @Autowired
     private ObjectMapper objectMapper;
     @MockBean
-    private GeneralItemService itemService;
+    private GameItemService itemService;
 
     @Test
     public void itemGame_whenAdd() throws Exception {
-        GeneralItemGame itemGame = new GeneralItemGame();
+        GameItemGame itemGame = new GameItemGame();
         itemGame.setName("warcraft");
         itemGame.setGenre("strategy");
         Mockito.when(itemService.create(Mockito.any())).thenReturn(itemGame);
@@ -47,7 +43,7 @@ public class JenaralItemControllerUnitTest {
 
     @Test
     public void itemGame_getByName() throws Exception {
-        GeneralItemGame itemGame = new GeneralItemGame();
+        GameItemGame itemGame = new GameItemGame();
         itemGame.setName("warcraft");
         itemGame.setGenre("strategy");
         Mockito.when(itemService.getByName(Mockito.any())).thenReturn(itemGame);
@@ -60,7 +56,7 @@ public class JenaralItemControllerUnitTest {
 
     @Test
     public void itemGame_getById() throws Exception {
-        GeneralItemGame itemGame = new GeneralItemGame();
+        GameItemGame itemGame = new GameItemGame();
         itemGame.setId((long) 3);
         itemGame.setName("warcraft");
         itemGame.setGenre("strategy");
@@ -75,10 +71,10 @@ public class JenaralItemControllerUnitTest {
 
     @Test
     public void itemGame_givenAll() throws Exception {
-        GeneralItemGame itemGame = new GeneralItemGame();
+        GameItemGame itemGame = new GameItemGame();
         itemGame.setName("warcraft");
         itemGame.setGenre("strategy");
-        GeneralItemGame itemGame1 = new GeneralItemGame();
+        GameItemGame itemGame1 = new GameItemGame();
         itemGame.setName("gta5");
         itemGame.setGenre("action");
         Mockito.when(itemService.getAllItems()).thenReturn(Arrays.asList(itemGame, itemGame1));
