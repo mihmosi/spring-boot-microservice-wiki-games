@@ -45,7 +45,7 @@ public class JenaralItemControllerUnitTest {
                 .andExpect(jsonPath("$.genre").value("strategy"));
     }
 
-    /*@Test
+    /* @Test
     public void itemGame_getByName() throws Exception {
         GeneralItemGame itemGame = new GeneralItemGame();
         itemGame.setName("warcraft");
