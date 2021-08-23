@@ -27,4 +27,5 @@ public class GeneralItemGame {
 
     @Convert(converter = StatusEnumToStringConverter.class)
     private Status status;
+
 }
