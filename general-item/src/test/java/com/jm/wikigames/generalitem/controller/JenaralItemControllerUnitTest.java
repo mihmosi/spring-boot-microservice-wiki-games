@@ -31,9 +31,10 @@ public class JenaralItemControllerUnitTest {
 
     @Test
     public void itemGame_whenAdd() throws Exception {
-        GeneralItemGame itemGame = new GeneralItemGame();
-        itemGame.setName("warcraft");
-        itemGame.setGenre("strategy");
+        GeneralItemGame itemGame = GeneralItemGame.builder()
+        .name("warcraft")
+        .genre("strategy")
+        .build();
         Mockito.when(itemService.create(Mockito.any())).thenReturn(itemGame);
         mockMvc.perform(
                 post("/api/items")
@@ -47,9 +48,10 @@ public class JenaralItemControllerUnitTest {
 
     @Test
     public void itemGame_getByName() throws Exception {
-        GeneralItemGame itemGame = new GeneralItemGame();
-        itemGame.setName("warcraft");
-        itemGame.setGenre("strategy");
+        GeneralItemGame itemGame = GeneralItemGame.builder()
+        .name("warcraft")
+        .genre("strategy")
+        .build();
         Mockito.when(itemService.getByName(Mockito.any())).thenReturn(itemGame);
         mockMvc.perform(
                 get("/api/items/warcraft"))
@@ -60,10 +62,11 @@ public class JenaralItemControllerUnitTest {
 
     @Test
     public void itemGame_getById() throws Exception {
-        GeneralItemGame itemGame = new GeneralItemGame();
-        itemGame.setId((long) 3);
-        itemGame.setName("warcraft");
-        itemGame.setGenre("strategy");
+        GeneralItemGame itemGame = GeneralItemGame.builder()
+        .id((long) 3)
+        .name("warcraft")
+        .genre("strategy")
+        .build();
         Mockito.when(itemService.getById(Mockito.any())).thenReturn(itemGame);
         mockMvc.perform(
                 get("/api/items/3"))
@@ -75,12 +78,14 @@ public class JenaralItemControllerUnitTest {
 
     @Test
     public void itemGame_givenAll() throws Exception {
-        GeneralItemGame itemGame = new GeneralItemGame();
-        itemGame.setName("warcraft");
-        itemGame.setGenre("strategy");
-        GeneralItemGame itemGame1 = new GeneralItemGame();
-        itemGame.setName("gta5");
-        itemGame.setGenre("action");
+        GeneralItemGame itemGame = GeneralItemGame.builder()
+        .name("warcraft")
+        .genre("strategy")
+        .build();
+        GeneralItemGame itemGame1 = GeneralItemGame.builder()
+        .name("gta5")
+        .genre("action")
+        .build();
         Mockito.when(itemService.getAllItems()).thenReturn(Arrays.asList(itemGame, itemGame1));
         mockMvc.perform(
                 get("/api/items"))
