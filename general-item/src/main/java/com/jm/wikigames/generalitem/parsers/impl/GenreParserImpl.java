@@ -1,4 +1,4 @@
-package parsers.impl;
+package com.jm.wikigames.generalitem.parsers.impl;
 
 import lombok.Data;
 import org.jsoup.Jsoup;
