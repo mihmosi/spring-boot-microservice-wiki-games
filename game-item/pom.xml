@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.jm.wiki-games</groupId>
-	<artifactId>general-item</artifactId>
+	<artifactId>game-item</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>general-item</name>
-	<description>General item include common information about games</description>
+	<name>game-item</name>
+	<description>Game item include common information about games</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
