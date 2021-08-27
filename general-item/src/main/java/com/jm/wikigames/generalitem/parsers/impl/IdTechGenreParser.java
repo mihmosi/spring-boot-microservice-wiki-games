@@ -4,6 +4,7 @@ import lombok.Data;
 import org.jsoup.Jsoup;
 import org.jsoup.select.Elements;
 import com.jm.wikigames.generalitem.parsers.GenreParser;
+
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -18,7 +19,26 @@ public class IdTechGenreParser implements GenreParser {
     private List<String> parsedValues;
     private Map<String, String> genreDescriptionMap;
 
+
     @Override
+    public Map<String, String> parseGenreMap() {
+        return parseGenreMap("https://www.idtech.com/blog/different-types-of-video-game-genres",
+                "#blog-post-content > p, h3, h4",
+                "[style], h3 > img, [alt], [itemprop], [href=mailto:collegeprep@idtech.com], " +
+                        "[href = mailto:privacy@idtech.com], [href = mailto:privacy@idtech.com]",
+                "h3");
+    }
+
+    @Override
+    public Map<String, String> updateParsedGenreMap() {
+        return updateGenreMap("https://www.idtech.com/blog/different-types-of-video-game-genres",
+                "#blog-post-content > p, h3, h4",
+                "[style], h3 > img, [alt], [itemprop], [href=mailto:collegeprep@idtech.com], " +
+                        "[href = mailto:privacy@idtech.com], [href = mailto:privacy@idtech.com]",
+                "h3");
+    }
+
+
     public Map<String, String> parseGenreMap(String url, String cssQuery, String excludeCssQuery, String keysCssQuery) {
         getParsedPage(url, cssQuery, excludeCssQuery);
         getParsedKeyNames(keysCssQuery);
@@ -36,7 +56,6 @@ public class IdTechGenreParser implements GenreParser {
     }
 
 
-    @Override
     public Map<String, String> updateGenreMap(String url, String cssQuery, String excludeCssQuery, String keysCssQuery) {
         resetValues();
         return parseGenreMap(url, cssQuery, excludeCssQuery, keysCssQuery);
@@ -51,7 +70,7 @@ public class IdTechGenreParser implements GenreParser {
     }
 
 
-    private Elements getParsedPage(String url, String cssQuery, String excludeCssQuery) {
+    public Elements getParsedPage(String url, String cssQuery, String excludeCssQuery) {
         if (parsedPage == null) {
             try {
                 parsedPage = Jsoup
@@ -68,7 +87,7 @@ public class IdTechGenreParser implements GenreParser {
         return parsedPage;
     }
 
-    private Elements getParsedKeyNames(String keysCssQuery) {
+    public Elements getParsedKeyNames(String keysCssQuery) {
         if (parsedKeyNames == null) {
             parsedKeyNames = parsedPage.select(keysCssQuery);
 
@@ -92,7 +111,7 @@ public class IdTechGenreParser implements GenreParser {
     }
 
 
-    private List<String> getValues(List<Integer> keyIndexList) {
+    public List<String> getValues(List<Integer> keyIndexList) {
         if (parsedValues == null) {
             parsedValues = new ArrayList<>();
 
