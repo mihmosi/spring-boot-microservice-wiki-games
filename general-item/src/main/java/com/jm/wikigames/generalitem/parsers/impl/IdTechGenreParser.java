@@ -63,6 +63,7 @@ public class IdTechGenreParser implements GenreParser {
 
 
     private void resetValues() {
+        genreDescriptionMap = null;
         parsedPage = null;
         parsedKeyNames = null;
         keyIndexList = null;
