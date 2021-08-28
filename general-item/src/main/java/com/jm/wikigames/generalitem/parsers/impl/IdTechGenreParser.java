@@ -1,52 +1,33 @@
 package com.jm.wikigames.generalitem.parsers.impl;
 
+import com.jm.wikigames.generalitem.parsers.AbstractWebPageParser;
 import lombok.Data;
-import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import com.jm.wikigames.generalitem.parsers.GenreParser;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
 @Data
-public class IdTechGenreParser implements GenreParser {
-    private final String userAgent = "Chrome/92.0.4515.159";
-    private final String referrer = "http://www.google.com";
+public class IdTechGenreParser extends AbstractWebPageParser {
     private Elements parsedPage;
-    private Elements parsedKeyNames;
+    private List<Element> parsedKeyNames;
     private List<Integer> keyIndexList;
     private List<String> parsedValues;
     private Map<String, String> genreDescriptionMap;
 
-
-    @Override
-    public Map<String, String> parseGenreMap() {
-        return parseGenreMap("https://www.idtech.com/blog/different-types-of-video-game-genres",
-                "#blog-post-content > p, h3, h4",
-                "[style], h3 > img, [alt], [itemprop], [href=mailto:collegeprep@idtech.com], " +
-                        "[href = mailto:privacy@idtech.com], [href = mailto:privacy@idtech.com]",
-                "h3");
-    }
-
-    @Override
-    public Map<String, String> updateParsedGenreMap() {
-        return updateGenreMap("https://www.idtech.com/blog/different-types-of-video-game-genres",
-                "#blog-post-content > p, h3, h4",
-                "[style], h3 > img, [alt], [itemprop], [href=mailto:collegeprep@idtech.com], " +
-                        "[href = mailto:privacy@idtech.com], [href = mailto:privacy@idtech.com]",
-                "h3");
-    }
+    private final String url = "https://www.idtech.com/blog/different-types-of-video-game-genres";
+    private final String selectQuery = "#blog-post-content > p, #blog-post-content > h3, #blog-post-content > h4";
+    private final String delElemQuery = "h3 > img";
+    private final String keysCssQuery = "h3";
 
 
-    public Map<String, String> parseGenreMap(String url, String cssQuery, String excludeCssQuery, String keysCssQuery) {
-        getParsedPage(url, cssQuery, excludeCssQuery);
-        getParsedKeyNames(keysCssQuery);
-        getKeyIndexList(keysCssQuery);
-        getValues(keyIndexList);
-
+    public Map<String, String> createGenreMap() {
         if (genreDescriptionMap == null) {
             genreDescriptionMap = new HashMap<>();
+            processFields();
 
             for (int i = 0; i < parsedKeyNames.size(); i++) {
                 genreDescriptionMap.put(parsedKeyNames.get(i).text(), parsedValues.get(i));
@@ -56,31 +37,34 @@ public class IdTechGenreParser implements GenreParser {
     }
 
 
-    public Map<String, String> updateGenreMap(String url, String cssQuery, String excludeCssQuery, String keysCssQuery) {
+    public Map<String, String> updateGenreMap() {
         resetValues();
-        return parseGenreMap(url, cssQuery, excludeCssQuery, keysCssQuery);
+        return createGenreMap();
+    }
+
+
+    private void processFields() {
+        parsePage(url, selectQuery);
+        parseGenreNames();
+        createKeyIndexes();
+        parseGenreDescript();
     }
 
 
     private void resetValues() {
-        genreDescriptionMap = null;
-        parsedPage = null;
-        parsedKeyNames = null;
-        keyIndexList = null;
-        parsedValues = null;
+        setGenreDescriptionMap(null);
+        setParsedPage(null);
+        setParsedKeyNames(null);
+        setKeyIndexList(null);
+        setParsedValues(null);
     }
 
 
-    public Elements getParsedPage(String url, String cssQuery, String excludeCssQuery) {
+    @Override
+    public Elements parsePage(String url, String cssQuery) {
         if (parsedPage == null) {
             try {
-                parsedPage = Jsoup
-                        .connect(url)
-                        .userAgent(userAgent)
-                        .referrer(referrer)
-                        .get()
-                        .select(cssQuery)
-                        .not(excludeCssQuery);
+                parsedPage = super.parsePage(url, cssQuery);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -88,54 +72,49 @@ public class IdTechGenreParser implements GenreParser {
         return parsedPage;
     }
 
-    public Elements getParsedKeyNames(String keysCssQuery) {
-        if (parsedKeyNames == null) {
-            parsedKeyNames = parsedPage.select(keysCssQuery);
 
-            parsedKeyNames = new Elements(parsedKeyNames
+    private void parseGenreNames() {
+        if (parsedKeyNames == null) {
+            Elements fetchedElem = selectElements(parsedPage, keysCssQuery);
+            parsedKeyNames = deleteElements(fetchedElem, delElemQuery)
                     .stream()
-                    .filter(e -> (parsedPage.get(parsedPage.indexOf(e)).text().length() > 2))
-                    .collect(Collectors.toList()));
+                    .filter(e -> (e.text().length() > 2))
+                    .collect(Collectors.toList());
         }
-        return parsedKeyNames;
     }
 
 
-    private List<Integer> getKeyIndexList(String keysCssQuery) {
+    private void createKeyIndexes() {
         if (keyIndexList == null) {
             keyIndexList = parsedKeyNames
                     .stream()
-                    .map(e -> parsedPage.indexOf(e))
+                    .map(parsedPage::indexOf)
                     .collect(Collectors.toList());
         }
-        return keyIndexList;
     }
 
 
-    public List<String> getValues(List<Integer> keyIndexList) {
+    private String elemListToString(List<Element> sublist) {
+        return sublist
+                .stream()
+                .reduce((acc, el) -> acc.append(el.text()))
+                .get()
+                .text();
+    }
+
+
+    private void parseGenreDescript() {
         if (parsedValues == null) {
             parsedValues = new ArrayList<>();
 
             for (int i = 0; i < (keyIndexList.size() - 1); i++) {
-                String valueDescription = parsedPage
-                        .subList((keyIndexList.get(i) + 1), (keyIndexList.get(i + 1)))
-                        .stream()
-                        .map(e -> {
-                            StringBuilder sb = new StringBuilder();
-                            return sb.append(e.text());
-                        })
-                        .reduce(new StringBuilder(), StringBuilder::append).toString();
-                parsedValues.add(valueDescription);
+                List<Element> keyDescription = parsedPage.subList((keyIndexList.get(i) + 1), (keyIndexList.get(i + 1)));
+                parsedValues.add(elemListToString(keyDescription));
             }
-            parsedValues.add(parsedPage
-                    .subList((keyIndexList.get(keyIndexList.size() - 1) + 1), parsedPage.size())
-                    .stream()
-                    .map(e -> {
-                        StringBuilder sb = new StringBuilder();
-                        return sb.append(e.text());
-                    })
-                    .reduce(new StringBuilder(), StringBuilder::append).toString());
+
+            List<Element> keyDescription =
+                    parsedPage.subList((keyIndexList.get(keyIndexList.size() - 1) + 1), (parsedPage.indexOf(parsedPage.last())));
+            parsedValues.add(elemListToString(keyDescription));
         }
-        return parsedValues;
     }
 }
