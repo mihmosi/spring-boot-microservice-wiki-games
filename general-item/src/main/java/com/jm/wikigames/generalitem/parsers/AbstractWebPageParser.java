@@ -19,14 +19,4 @@ public abstract class AbstractWebPageParser {
                 .get()
                 .select(cssQuery);
     }
-
-
-    public Elements selectElements(Elements parsedPage, String elemQuery) {
-        return parsedPage.select(elemQuery);
-    }
-
-
-    public Elements deleteElements(Elements parsedPage, String elemQuery) {
-        return parsedPage.not(elemQuery);
-    }
 }

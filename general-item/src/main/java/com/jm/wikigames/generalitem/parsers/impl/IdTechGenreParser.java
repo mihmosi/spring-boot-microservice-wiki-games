@@ -4,7 +4,6 @@ import com.jm.wikigames.generalitem.parsers.AbstractWebPageParser;
 import lombok.Data;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -13,27 +12,30 @@ import java.util.stream.Collectors;
 @Data
 public class IdTechGenreParser extends AbstractWebPageParser {
     private Elements parsedPage;
-    private List<Element> parsedKeyNames;
-    private List<Integer> keyIndexList;
-    private List<String> parsedValues;
-    private Map<String, String> genreDescriptionMap;
+    private List<Element> genreNames;
+    private List<Element> subGenNames;
+    private List<Integer> genreIndexList;
+    private List<Integer> subGenIndexList;
+    private List<String> genreDescript;
+    private List<String> subGenDescript;
+    private Map<String, String> genreDescMap;
+    private Map<String, String> subGenDescMap;
 
     private final String url = "https://www.idtech.com/blog/different-types-of-video-game-genres";
     private final String selectQuery = "#blog-post-content > p, #blog-post-content > h3, #blog-post-content > h4";
-    private final String delElemQuery = "h3 > img";
-    private final String keysCssQuery = "h3";
+    private final String genreDelQuery = "h3 > img, alt=Strategy, Games height=90";
+    private final String subGenDelQuery = "h4 > em";
+    private final String genreNamesCss = "h3";
+    private final String subGenCss = "h4";
 
 
     public Map<String, String> createGenreMap() {
-        if (genreDescriptionMap == null) {
-            genreDescriptionMap = new HashMap<>();
+        if (genreDescMap == null) {
             processFields();
-
-            for (int i = 0; i < parsedKeyNames.size(); i++) {
-                genreDescriptionMap.put(parsedKeyNames.get(i).text(), parsedValues.get(i));
-            }
+            genreDescMap = createMap(genreNames, genreDescript);
+            genreDescMap.putAll(subGenDescMap);
         }
-        return genreDescriptionMap;
+        return genreDescMap;
     }
 
 
@@ -43,20 +45,60 @@ public class IdTechGenreParser extends AbstractWebPageParser {
     }
 
 
+    private Map<String, String> createMap(List<Element> names, List<String> descriptions) {
+        Map<String, String> map = new HashMap<>();
+        processFields();
+
+        for (int i = 0; i < names.size(); i++) {
+            map.put(names.get(i).text(), descriptions.get(i));
+        }
+        return map;
+    }
+
+
+    private void createSubMap() {
+        if (subGenDescMap == null) {
+            subGenDescMap = new HashMap<>();
+            subGenDescMap = createMap(subGenNames, subGenDescript);
+        }
+    }
+
+
     private void processFields() {
         parsePage(url, selectQuery);
-        parseGenreNames();
-        createKeyIndexes();
-        parseGenreDescript();
+        genreNames = parsedPage
+                .select(genreNamesCss)
+                .stream()
+                .filter(e -> e.text().length() > 2)
+                .collect(Collectors.toList());
+        genreIndexList = createKeyIndexes(genreNames);
+        genreDescript = parseDescriptions(genreIndexList);
+
+        subGenNames = parsedPage
+                .select(subGenCss)
+                .stream()
+                .filter(e -> !e.text().equals("Types of RPG Games:"))
+                .collect(Collectors.toList());
+
+        subGenIndexList = createKeyIndexes(subGenNames);
+        subGenDescript = parseDescriptions(subGenIndexList);
+
+        createSubMap();
     }
 
 
     private void resetValues() {
-        setGenreDescriptionMap(null);
         setParsedPage(null);
-        setParsedKeyNames(null);
-        setKeyIndexList(null);
-        setParsedValues(null);
+        setGenreDescMap(null);
+        setSubGenDescMap(null);
+
+        setGenreNames(null);
+        setGenreIndexList(null);
+        setGenreDescript(null);
+
+        setSubGenNames(null);
+        setSubGenIndexList(null);
+        setSubGenDescript(null);
     }
 
 
@@ -73,24 +115,11 @@ public class IdTechGenreParser extends AbstractWebPageParser {
     }
 
 
-    private void parseGenreNames() {
-        if (parsedKeyNames == null) {
-            Elements fetchedElem = selectElements(parsedPage, keysCssQuery);
-            parsedKeyNames = deleteElements(fetchedElem, delElemQuery)
-                    .stream()
-                    .filter(e -> (e.text().length() > 2))
-                    .collect(Collectors.toList());
-        }
-    }
-
-
-    private void createKeyIndexes() {
-        if (keyIndexList == null) {
-            keyIndexList = parsedKeyNames
-                    .stream()
-                    .map(parsedPage::indexOf)
-                    .collect(Collectors.toList());
-        }
+    private List<Integer> createKeyIndexes(List<Element> elements) {
+        return elements
+                .stream()
+                .map(parsedPage::indexOf)
+                .collect(Collectors.toList());
     }
 
 
@@ -103,18 +132,21 @@ public class IdTechGenreParser extends AbstractWebPageParser {
     }
 
 
-    private void parseGenreDescript() {
-        if (parsedValues == null) {
-            parsedValues = new ArrayList<>();
+    private List<String> parseDescriptions(List<Integer> indexes) {
+        List<String> parsedValues = new ArrayList<>();
+        List<Element> keyDescription;
 
-            for (int i = 0; i < (keyIndexList.size() - 1); i++) {
-                List<Element> keyDescription = parsedPage.subList((keyIndexList.get(i) + 1), (keyIndexList.get(i + 1)));
+        for (int i = 0; i < (indexes.size() - 1); i++) {
+            keyDescription = parsedPage.subList((indexes.get(i) + 1), (indexes.get(i + 1)));
+            if (keyDescription.size() > 0) {
                 parsedValues.add(elemListToString(keyDescription));
             }
 
-            List<Element> keyDescription =
-                    parsedPage.subList((keyIndexList.get(keyIndexList.size() - 1) + 1), (parsedPage.indexOf(parsedPage.last())));
-            parsedValues.add(elemListToString(keyDescription));
         }
+
+        keyDescription = parsedPage.subList((indexes.get(indexes.size() - 1) + 1), (parsedPage.indexOf(parsedPage.last())));
+        parsedValues.add(elemListToString(keyDescription));
+
+        return parsedValues;
     }
 }
