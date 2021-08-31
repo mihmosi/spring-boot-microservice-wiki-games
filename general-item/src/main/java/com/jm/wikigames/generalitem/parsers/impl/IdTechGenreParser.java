@@ -72,7 +72,7 @@ public class IdTechGenreParser extends AbstractWebPageParser {
                 .collect(Collectors.toList());
 
         subGenIndexList = createKeyIndexes(subGenNames);
-        subGenDescript = parseDescriptions(subGenIndexList);
+        subGenDescript = parseDescriptions(subGenIndexList, genreIndexList);
 
         subGenDescMap = createMap(subGenNames, subGenDescript);
     }
@@ -132,9 +132,33 @@ public class IdTechGenreParser extends AbstractWebPageParser {
             if (keyDescription.size() > 0) {
                 parsedValues.add(elemListToString(keyDescription));
             }
-
         }
+        keyDescription = parsedPage.subList((indexes.get(indexes.size() - 1) + 1), (parsedPage.indexOf(parsedPage.last())));
+        parsedValues.add(elemListToString(keyDescription));
 
+        return parsedValues;
+    }
+
+
+    private List<String> parseDescriptions(List<Integer> subIndexes, List<Integer> endIndexes) {
+        List<String> parsedValues = new ArrayList<>();
+        List<Element> keyDescription;
+        List<Integer> indexes = new ArrayList<>(subIndexes);
+        indexes.addAll(endIndexes);
+        Collections.sort(indexes);
+        int firstInd;
+        int lastInd;
+
+        for (int i = 0; i < (indexes.size() - 1); i++) {
+            firstInd = indexes.get(i);
+            if (!endIndexes.contains(firstInd)) {
+                lastInd = indexes.get(i + 1);
+                keyDescription = parsedPage.subList((firstInd + 1), (lastInd));
+                if (keyDescription.size() > 0) {
+                    parsedValues.add(elemListToString(keyDescription));
+                }
+            }
+        }
         keyDescription = parsedPage.subList((indexes.get(indexes.size() - 1) + 1), (parsedPage.indexOf(parsedPage.last())));
         parsedValues.add(elemListToString(keyDescription));
 
