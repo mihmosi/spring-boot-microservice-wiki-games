@@ -25,11 +25,11 @@ public abstract class AbstractWebPageParser {
     }
 
 
-    public Map<String, String> createMap(List<Element> names, List<String> descriptions) {
+    public Map<String, String> createMap(List<Element> names, List<Element> descriptions) {
         Map<String, String> map = new HashMap<>();
 
         for (int i = 0; i < names.size(); i++) {
-            map.put(names.get(i).text(), descriptions.get(i));
+            map.put(names.get(i).text(), descriptions.get(i).text());
         }
         return map;
     }

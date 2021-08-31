@@ -16,8 +16,8 @@ public class IdTechGenreParser extends AbstractWebPageParser {
     private List<Element> subGenNames;
     private List<Integer> genreIndexList;
     private List<Integer> subGenIndexList;
-    private List<String> genreDescript;
-    private List<String> subGenDescript;
+    private List<Element> genreDescript;
+    private List<Element> subGenDescript;
     private Map<String, String> genreDescMap;
     private Map<String, String> subGenDescMap;
 
@@ -57,7 +57,7 @@ public class IdTechGenreParser extends AbstractWebPageParser {
                 .filter(e -> e.text().length() > 2)
                 .collect(Collectors.toList());
         genreIndexList = createKeyIndexes(parsedPage, genreNames);
-        genreDescript = parseDescriptions(genreIndexList);
+        genreDescript = parseDescriptions(parsedPage, genreIndexList);
 
         subGenNames = parsedPage
                 .select(subGenCss)
@@ -66,7 +66,7 @@ public class IdTechGenreParser extends AbstractWebPageParser {
                 .collect(Collectors.toList());
 
         subGenIndexList = createKeyIndexes(parsedPage, subGenNames);
-        subGenDescript = parseSubGenDesc(subGenIndexList, genreIndexList);
+        subGenDescript = parseSubGenDesc(parsedPage, subGenIndexList, genreIndexList);
 
         subGenDescMap = createMap(subGenNames, subGenDescript);
     }
@@ -95,34 +95,33 @@ public class IdTechGenreParser extends AbstractWebPageParser {
     }
 
 
-    private String elemListToString(List<Element> sublist) {
+    private Element shrinkToOne(List<Element> sublist) {
         return sublist
                 .stream()
                 .reduce((acc, el) -> acc.append(el.text()))
-                .get()
-                .text();
+                .get();
     }
 
 
-    private List<String> parseDescriptions(List<Integer> indexes) {
-        List<String> parsedValues = new ArrayList<>();
+    private List<Element> parseDescriptions(Elements page, List<Integer> indexes) {
+        List<Element> parsedValues = new ArrayList<>();
         List<Element> keyDescription;
 
         for (int i = 0; i < (indexes.size() - 1); i++) {
-            keyDescription = parsedPage.subList((indexes.get(i) + 1), (indexes.get(i + 1)));
+            keyDescription = page.subList((indexes.get(i) + 1), (indexes.get(i + 1)));
             if (keyDescription.size() > 0) {
-                parsedValues.add(elemListToString(keyDescription));
+                parsedValues.add(shrinkToOne(keyDescription));
             }
         }
-        keyDescription = parsedPage.subList((indexes.get(indexes.size() - 1) + 1), (parsedPage.indexOf(parsedPage.last())));
-        parsedValues.add(elemListToString(keyDescription));
+        keyDescription = page.subList((indexes.get(indexes.size() - 1) + 1), (page.indexOf(page.last())));
+        parsedValues.add(shrinkToOne(keyDescription));
 
         return parsedValues;
     }
 
 
-    private List<String> parseSubGenDesc(List<Integer> subIndexes, List<Integer> endIndexes) {
-        List<String> parsedValues = new ArrayList<>();
+    private List<Element> parseSubGenDesc(Elements page, List<Integer> subIndexes, List<Integer> endIndexes) {
+        List<Element> parsedValues = new ArrayList<>();
         List<Element> keyDescription;
         List<Integer> indexes = new ArrayList<>(subIndexes);
         indexes.addAll(endIndexes);
@@ -134,14 +133,14 @@ public class IdTechGenreParser extends AbstractWebPageParser {
             firstInd = indexes.get(i);
             if (!endIndexes.contains(firstInd)) {
                 lastInd = indexes.get(i + 1);
-                keyDescription = parsedPage.subList((firstInd + 1), (lastInd));
+                keyDescription = page.subList((firstInd + 1), (lastInd));
                 if (keyDescription.size() > 0) {
-                    parsedValues.add(elemListToString(keyDescription));
+                    parsedValues.add(shrinkToOne(keyDescription));
                 }
             }
         }
-        keyDescription = parsedPage.subList((indexes.get(indexes.size() - 1) + 1), (parsedPage.indexOf(parsedPage.last())));
-        parsedValues.add(elemListToString(keyDescription));
+        keyDescription = page.subList((indexes.get(indexes.size() - 1) + 1), (page.indexOf(page.last())));
+        parsedValues.add(shrinkToOne(keyDescription));
 
         return parsedValues;
     }
