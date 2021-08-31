@@ -21,7 +21,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/user/show") //работает вроде
+    @GetMapping("/users")
     public List <UserModel> getAllUsers(){
         return userService.getAllUsers ();
     }
