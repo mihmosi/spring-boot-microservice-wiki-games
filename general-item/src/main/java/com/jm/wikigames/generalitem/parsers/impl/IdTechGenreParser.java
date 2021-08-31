@@ -47,20 +47,11 @@ public class IdTechGenreParser extends AbstractWebPageParser {
 
     private Map<String, String> createMap(List<Element> names, List<String> descriptions) {
         Map<String, String> map = new HashMap<>();
-        processFields();
 
         for (int i = 0; i < names.size(); i++) {
             map.put(names.get(i).text(), descriptions.get(i));
         }
         return map;
-    }
-
-
-    private void createSubMap() {
-        if (subGenDescMap == null) {
-            subGenDescMap = new HashMap<>();
-            subGenDescMap = createMap(subGenNames, subGenDescript);
-        }
     }
 
 
@@ -83,7 +74,7 @@ public class IdTechGenreParser extends AbstractWebPageParser {
         subGenIndexList = createKeyIndexes(subGenNames);
         subGenDescript = parseDescriptions(subGenIndexList);
 
-        createSubMap();
+        subGenDescMap = createMap(subGenNames, subGenDescript);
     }
 
 
