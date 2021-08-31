@@ -2,8 +2,12 @@ package com.jm.wikigames.generalitem.parsers;
 
 import lombok.Data;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Data
 public abstract class AbstractWebPageParser {
@@ -18,5 +22,15 @@ public abstract class AbstractWebPageParser {
                 .referrer(referrer)
                 .get()
                 .select(cssQuery);
+    }
+
+
+    public Map<String, String> createMap(List<Element> names, List<String> descriptions) {
+        Map<String, String> map = new HashMap<>();
+
+        for (int i = 0; i < names.size(); i++) {
+            map.put(names.get(i).text(), descriptions.get(i));
+        }
+        return map;
     }
 }

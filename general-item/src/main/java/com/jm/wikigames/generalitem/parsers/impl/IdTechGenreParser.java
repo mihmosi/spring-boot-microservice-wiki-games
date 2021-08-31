@@ -45,24 +45,18 @@ public class IdTechGenreParser extends AbstractWebPageParser {
     }
 
 
-    private Map<String, String> createMap(List<Element> names, List<String> descriptions) {
-        Map<String, String> map = new HashMap<>();
-
-        for (int i = 0; i < names.size(); i++) {
-            map.put(names.get(i).text(), descriptions.get(i));
-        }
-        return map;
-    }
-
-
     private void processFields() {
-        parsePage(url, selectQuery);
+        try {
+            parsedPage = parsePage(url, selectQuery);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         genreNames = parsedPage
                 .select(genreNamesCss)
                 .stream()
                 .filter(e -> e.text().length() > 2)
                 .collect(Collectors.toList());
-        genreIndexList = createKeyIndexes(genreNames);
+        genreIndexList = createKeyIndexes(parsedPage, genreNames);
         genreDescript = parseDescriptions(genreIndexList);
 
         subGenNames = parsedPage
@@ -71,8 +65,8 @@ public class IdTechGenreParser extends AbstractWebPageParser {
                 .filter(e -> !e.text().equals("Types of RPG Games:"))
                 .collect(Collectors.toList());
 
-        subGenIndexList = createKeyIndexes(subGenNames);
-        subGenDescript = parseDescriptions(subGenIndexList, genreIndexList);
+        subGenIndexList = createKeyIndexes(parsedPage, subGenNames);
+        subGenDescript = parseSubGenDesc(subGenIndexList, genreIndexList);
 
         subGenDescMap = createMap(subGenNames, subGenDescript);
     }
@@ -93,23 +87,10 @@ public class IdTechGenreParser extends AbstractWebPageParser {
     }
 
 
-    @Override
-    public Elements parsePage(String url, String cssQuery) {
-        if (parsedPage == null) {
-            try {
-                parsedPage = super.parsePage(url, cssQuery);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return parsedPage;
-    }
-
-
-    private List<Integer> createKeyIndexes(List<Element> elements) {
+    private List<Integer> createKeyIndexes(Elements page, List<Element> elements) {
         return elements
                 .stream()
-                .map(parsedPage::indexOf)
+                .map(page::indexOf)
                 .collect(Collectors.toList());
     }
 
@@ -140,7 +121,7 @@ public class IdTechGenreParser extends AbstractWebPageParser {
     }
 
 
-    private List<String> parseDescriptions(List<Integer> subIndexes, List<Integer> endIndexes) {
+    private List<String> parseSubGenDesc(List<Integer> subIndexes, List<Integer> endIndexes) {
         List<String> parsedValues = new ArrayList<>();
         List<Element> keyDescription;
         List<Integer> indexes = new ArrayList<>(subIndexes);
