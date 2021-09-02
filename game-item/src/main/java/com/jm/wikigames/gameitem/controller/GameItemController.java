@@ -3,7 +3,6 @@ package com.jm.wikigames.gameitem.controller;
 import com.jm.wikigames.gameitem.model.GameItem;
 import com.jm.wikigames.gameitem.services.GameItemService;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -26,12 +25,12 @@ public class GameItemController {
 		return gameItemService.getAllItems();
 	}
 
-	@GetMapping("/items/{name}")
+	@GetMapping("/items/name/{name}")
 	public GameItem getItemByName(@PathVariable String name) {
 		return gameItemService.getByName(name);
 	}
 
-	@GetMapping("/items/{id}")
+	@GetMapping("/items/id/{id}")
 	public GameItem getItemById(@PathVariable Long id) {
 		return gameItemService.getById(id);
 	}

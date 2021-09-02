@@ -46,9 +46,9 @@ public class JenaralItemControllerUnitTest {
         GameItem itemGame = new GameItem();
         itemGame.setName("warcraft");
         itemGame.setGenre("strategy");
-        Mockito.when(itemService.getByName(Mockito.any())).thenReturn(itemGame);
+        Mockito.when(itemService.getByName(Mockito.anyString())).thenReturn(itemGame);
         mockMvc.perform(
-                get("/api/items/warcraft"))
+                get("/api/items/name/warcraft"))
                 .andExpect(content().json(objectMapper.writeValueAsString(itemGame)))
                 .andExpect(jsonPath("$.name").value("warcraft"))
                 .andExpect(jsonPath("$.genre").value("strategy"));
@@ -60,9 +60,9 @@ public class JenaralItemControllerUnitTest {
         itemGame.setId((long) 3);
         itemGame.setName("warcraft");
         itemGame.setGenre("strategy");
-        Mockito.when(itemService.getById(Mockito.any())).thenReturn(itemGame);
+        Mockito.when(itemService.getById(Mockito.anyLong())).thenReturn(itemGame);
         mockMvc.perform(
-                get("/api/items/3"))
+                get("/api/items/id/3"))
                 .andExpect(jsonPath("$.id").value(3))
                 .andExpect(jsonPath("$.name").value("warcraft"))
                 .andExpect(jsonPath("$.genre").value("strategy"));
