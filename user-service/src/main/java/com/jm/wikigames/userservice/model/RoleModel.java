@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+
 public class RoleModel implements GrantedAuthority {
 
     @Id
@@ -19,6 +19,10 @@ public class RoleModel implements GrantedAuthority {
     private Long id;
 
     private String nameRole;
+
+    public RoleModel(String nameRole) {
+        this.nameRole = nameRole;
+    }
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(

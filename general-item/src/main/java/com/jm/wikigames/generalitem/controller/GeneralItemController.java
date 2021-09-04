@@ -2,6 +2,9 @@ package com.jm.wikigames.generalitem.controller;
 
 import com.jm.wikigames.generalitem.model.GeneralItemGame;
 import com.jm.wikigames.generalitem.services.GeneralItemService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,8 +25,11 @@ public class GeneralItemController {
 	}
 
 	@GetMapping("/items")
-	public List<GeneralItemGame> getAllItems() {
-		return generalItemService.getAllItems();
+	public ResponseEntity<?> getAllItems() {
+		List<GeneralItemGame> responseBody = generalItemService.getAllItems();
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Access-Control-Allow-Origin", "http://localhost:3000");
+		return new ResponseEntity<>(responseBody, headers, HttpStatus.OK);
 	}
 
 	@GetMapping("/items/{name}")

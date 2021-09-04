@@ -1,0 +1,24 @@
+span {
+    font-size: 80px;
+}
+
+#lastImage {
+    margin-right: 5em;
+}
+
+.flex-column a {
+    font-size: x-large;
+    background-color: aqua;
+}
+
+#about {
+    color: rgb(12, 12, 12);
+    
+}
+#catalog {
+    color:rgb(41, 2, 10)
+}
+
+#joinUs {
+    color: rgb(5, 5, 63);
+}

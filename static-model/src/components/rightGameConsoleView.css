@@ -1,0 +1,45 @@
+#toPlay {
+    border-radius: 100%;
+    width: 34%;
+    height: 6.5vw;
+    opacity: 20%;
+    font-size: 2vw;
+    color: white;
+    position: relative;
+    left: 40%;
+    top: 19vw;
+}
+
+#x{ 
+    position: relative;
+    left: 14%;
+    top: 1.8vw;
+}
+
+#b{
+    position: relative;
+    top: 7.9vw;
+    right: 3%;
+    height: 3vw;
+    width: 17%;
+}
+
+#y{
+    position: relative;
+    top: 4.9vw;
+    right: 37.5%;
+    width: 17%;
+}
+
+#a{
+    margin-left: 66%;
+    margin-top: 1.8vw;
+    height: 3vw;
+    width: 17%;
+}
+
+#homeButton{
+    margin-left: 36%;
+    margin-top: 15.9vw;
+    height: 3.3vw;
+}

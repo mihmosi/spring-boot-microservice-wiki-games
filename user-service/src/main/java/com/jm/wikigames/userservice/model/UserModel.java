@@ -14,6 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Set;
 
 
 @Entity
@@ -28,7 +29,9 @@ public class UserModel implements UserDetails {
 	private String name;
 	private String password;
 	private String email;
-	private RoleModel role;
+
+	@ManyToMany (mappedBy = "users")
+	private Set<RoleModel> roles;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

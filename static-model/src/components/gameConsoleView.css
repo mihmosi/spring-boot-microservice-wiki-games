@@ -1,0 +1,38 @@
+#gameConsoleViewMode {
+    background-image: url("../image/GamePlayConsoleMain.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 800px;
+
+    display: grid;
+    grid-template-columns: 19% 62% 19%;
+    grid-template-rows: 38vw;
+}
+
+#gameConsoleViewMode button:hover {
+    background: rgba(0,0,0,0);
+	color: #3a7999;
+	box-shadow: inset 0 0 0 3px #3a7999;
+}
+
+#display{
+    height: 34vW;
+    position: relative;
+    top: 4vw;
+    overflow-y: auto;
+    background-image: url("https://verol.net/images/virtuemart/product/3DW00044.jpg");
+    animation: bg-animation 25s ease infinite;
+}
+
+@keyframes bg-animation {
+    100% {
+        background-size: 100%;
+        background-position: 100%;
+    }
+}
+
+.selected td {
+    background-color: lawngreen;
+    color: blue;
+}
+
