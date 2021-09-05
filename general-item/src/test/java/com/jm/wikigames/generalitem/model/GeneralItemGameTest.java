@@ -25,13 +25,8 @@ public class GeneralItemGameTest {
         GeneralItemGame game = GeneralItemGameDirector.builderRelease()
             .id(1L)
             .name("Bloodborne")
-            .dateOfCreation("14.07.2021")
-            .genre("action/RPG")
-            .heroes("human")
-            .villains("monsters")
             .build();
-        Status result = game.getStatus();
-        Assertions.assertEquals("RELEASE",result.name());
+        Assertions.assertEquals(Status.RELEASE,game.getStatus());
     }
 
     @Test
@@ -39,13 +34,8 @@ public class GeneralItemGameTest {
         GeneralItemGame game = GeneralItemGameDirector.builderProduction()
             .id(1L)
             .name("Bloodborne")
-            .dateOfCreation("14.07.2021")
-            .genre("action/RPG")
-            .heroes("human")
-            .villains("monsters")
             .build();
-        Status result = game.getStatus();
-        Assertions.assertEquals("PRODUCTION",result.name());
+        Assertions.assertEquals(Status.PRODUCTION,game.getStatus());
     }
 
 }
