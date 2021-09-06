@@ -22,9 +22,10 @@ public class GeneralItemGameGetByIdTest {
 
     @Test
     void getByIdTest(){
-        GeneralItemGame game = new GeneralItemGame();
-        game.setId(1L);
-        game.setName("Last Guardian");
+        GeneralItemGame game = GeneralItemGame.builder()
+            .id(1L)
+            .name("Last Guardian")
+            .build();
 
         when(repository.getById(1L)).thenReturn(game);
         GeneralItemGame test = service.getById(1L);

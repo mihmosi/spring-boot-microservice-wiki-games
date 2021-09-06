@@ -12,6 +12,7 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"id","name"})
+@Builder
 public class GeneralItemGame {
 
     @Id
@@ -26,4 +27,5 @@ public class GeneralItemGame {
 
     @Convert(converter = StatusEnumToStringConverter.class)
     private Status status;
+
 }
