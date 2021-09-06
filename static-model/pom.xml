@@ -14,7 +14,7 @@
     <artifactId>static-model</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>static-model</name>
-    <description>General model for work with front</description>
+    <description>Game model for work with front</description>
 
     <properties>
         <java.version>11</java.version>

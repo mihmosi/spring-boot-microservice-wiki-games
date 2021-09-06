@@ -13,7 +13,7 @@
 	<name>spring-boot-microservices-wiki-games</name>
 
 	<modules>
-		<module>general-item</module>
+		<module>game-item</module>
 		<module>static-model</module>
 		<module>user-service</module>
 	</modules>
