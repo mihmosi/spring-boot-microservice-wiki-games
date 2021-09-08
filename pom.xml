@@ -16,7 +16,6 @@
 		<module>game-item</module>
 		<module>static-model</module>
 		<module>user-service</module>
-		<module>social-service</module>
 	</modules>
 
 
