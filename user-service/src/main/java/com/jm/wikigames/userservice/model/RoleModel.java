@@ -18,11 +18,11 @@ public class RoleModel implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nameRole;
+    private String nameRoles;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(
-            name = "user_role"
+            name = "user_roles"
             , joinColumns = @JoinColumn(name = "role_id")
             , inverseJoinColumns = @JoinColumn(name = "user_id")
     )
@@ -30,6 +30,6 @@ public class RoleModel implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
-        return this.nameRole;
+        return this.nameRoles;
     }
 }
