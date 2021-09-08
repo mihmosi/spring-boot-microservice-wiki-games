@@ -1,6 +1,6 @@
-package com.jm.wikigames.generalitem.parsers.impl;
+package com.jm.wikigames.gameitem.parsers.impl;
 
-import com.jm.wikigames.generalitem.parsers.AbstractWebPageParser;
+import com.jm.wikigames.gameitem.parsers.AbstractWebPageParser;
 import lombok.Data;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
