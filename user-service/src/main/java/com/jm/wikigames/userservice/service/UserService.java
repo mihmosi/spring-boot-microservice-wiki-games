@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface UserService {
-
+// TODO: убрать аннотацию @Transactional
     @Transactional
     UserModel create(UserModel userModel);
 

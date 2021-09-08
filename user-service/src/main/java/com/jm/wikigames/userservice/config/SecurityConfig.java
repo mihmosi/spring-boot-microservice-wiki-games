@@ -26,6 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
+    // TODO: использовать не deprecated метод.
     @Bean
     public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(10);
