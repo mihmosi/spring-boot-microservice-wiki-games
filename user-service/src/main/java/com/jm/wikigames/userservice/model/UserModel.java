@@ -1,11 +1,6 @@
 package com.jm.wikigames.userservice.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Set;
 
 
 @Entity
@@ -28,8 +24,14 @@ public class UserModel implements UserDetails {
 	private String name;
 	private String password;
 	private String email;
-//	private RoleModel role;
-	private RoleModel role;
+
+	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+	@JoinTable(
+			name = "user_role"
+			, joinColumns = @JoinColumn(name = "role_id")
+			, inverseJoinColumns = @JoinColumn(name = "user_id")
+	)
+	private Set<RoleModel> roles;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
