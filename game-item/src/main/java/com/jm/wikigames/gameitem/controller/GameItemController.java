@@ -1,5 +1,6 @@
 package com.jm.wikigames.gameitem.controller;
 
+import com.jm.wikigames.gameitem.dto.GameItemDTO;
 import com.jm.wikigames.gameitem.model.GameItem;
 import com.jm.wikigames.gameitem.services.GameItemService;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +18,10 @@ public class GameItemController {
 	}
 
 	@PostMapping("/items")
-	public GameItem addItem(@RequestBody GameItem gameItem) {
-		return gameItemService.create(gameItem);
+	public GameItemDTO addItem(@RequestBody GameItemDTO gameItemDTO) {
+		return gameItemService.create(gameItemDTO);
 	}
-
+	
 	@GetMapping("/items")
 	public List<GameItem> getAllItems() {
 		return gameItemService.getAllItems();
