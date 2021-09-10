@@ -5,4 +5,7 @@ public class Poo {
         System.out.println(s);
     }
 
+    static Integer getI(Integer i) {
+        return i;
+    }
 }
