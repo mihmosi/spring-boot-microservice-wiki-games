@@ -24,14 +24,7 @@ public class UserModel implements UserDetails {
 	private String name;
 	private String password;
 	private String email;
-
-	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
-	@JoinTable(
-			name = "user_role"
-			, joinColumns = @JoinColumn(name = "role_id")
-			, inverseJoinColumns = @JoinColumn(name = "user_id")
-	)
-	private Set<RoleModel> roles;
+	private RoleModel role;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

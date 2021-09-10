@@ -1,5 +1,6 @@
 package com.jm.wikigames.userservice.dto;
 
+import com.jm.wikigames.userservice.model.RoleModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,6 @@ public class UserDTO {
     private Long id;
     private String name;
     private String email;
-    private Set<RoleDTO> roles;
+    private Set<RoleModel> roles;
 
 }
