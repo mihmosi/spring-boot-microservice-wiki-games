@@ -1,11 +1,8 @@
 package com.jm.wikigames.userservice;
 
 public class Poo {
-    private void get(Integer s) {
+    protected void get(String s) {
         System.out.println(s);
     }
 
-    private static Integer getI(Integer i) {
-        return i;
-    }
 }
