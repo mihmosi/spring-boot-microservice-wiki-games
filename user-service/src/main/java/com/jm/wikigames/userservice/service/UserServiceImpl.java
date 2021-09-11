@@ -2,6 +2,7 @@ package com.jm.wikigames.userservice.service;
 
 import com.jm.wikigames.userservice.model.UserModel;
 import com.jm.wikigames.userservice.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,18 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
-
     @Override
-    @Transactional
     public UserModel create(UserModel userModel) {
         userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
         return userRepository.save(userModel);
@@ -48,7 +44,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    @Transactional
     public void delete(Long id) {
         userRepository.deleteById(id);
     }
