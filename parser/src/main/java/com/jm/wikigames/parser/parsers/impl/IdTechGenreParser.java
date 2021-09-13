@@ -1,16 +1,18 @@
-package com.jm.wikigames.gameitem.parsers.impl;
+package com.jm.wikigames.parser.parsers.impl;
 
-import com.jm.wikigames.gameitem.parsers.AbstractWebPageParser;
+import com.jm.wikigames.parser.parsers.WebPageParser;
 import lombok.Data;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+@Component
 @Data
-public class IdTechGenreParser extends AbstractWebPageParser {
+public class IdTechGenreParser implements WebPageParser {
     private Elements parsedPage;
     private List<Element> genreNames;
     private List<Element> subGenNames;
@@ -29,6 +31,7 @@ public class IdTechGenreParser extends AbstractWebPageParser {
     private final String subGenCss = "h4";
 
 
+    @Override
     public Map<String, String> createGenreMap() {
         if (genreDescMap == null) {
             processFields();
