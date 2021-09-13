@@ -14,6 +14,7 @@
 
 	<modules>
 		<module>game-item</module>
+		<module>parser</module>
 		<module>static-model</module>
 		<module>user-service</module>
 		<module>social-service</module>
