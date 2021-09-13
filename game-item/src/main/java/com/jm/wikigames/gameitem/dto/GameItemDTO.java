@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GameItemDTO {
 
-    private Long id; //возможно лишнее, нет в описании
     private String name;
     private String lore; //new
     private String originalSource; //new
@@ -22,8 +21,8 @@ public class GameItemDTO {
     private String gameUniversity; //new
     private String systemRequirements; //new
     private String gameMode; //new - режим игры ( одиночная, кооператив...)
-    private String heroes; //возможно лишнее, нет в описании
-    private String villains; //возможно лишнее, нет в описании
+    private String heroes; //возможно лишнее, не перечислено в ТЗ
+    private String villains; //возможно лишнее, не перечислено в ТЗ
     private Status status;
     private String link; //new
 
