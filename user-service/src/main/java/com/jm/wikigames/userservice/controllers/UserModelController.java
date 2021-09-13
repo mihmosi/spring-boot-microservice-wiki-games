@@ -12,9 +12,9 @@ public class UserModelController {
 
     private UserService userService;
 
-    @DeleteMapping("/items/{name}")
-    public void deleteItemByName(@PathVariable String name) {
-        userService.delete(userService.getByName(name).getId());
+    @DeleteMapping("/items/{id}")
+    public void deleteItemByName(@PathVariable Long id) {
+        userService.delete(id);
     }
 
 }
