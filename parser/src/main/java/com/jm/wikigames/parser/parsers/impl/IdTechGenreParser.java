@@ -1,5 +1,6 @@
 package com.jm.wikigames.parser.parsers.impl;
 
+import com.jm.wikigames.parser.model.WebPage;
 import com.jm.wikigames.parser.parsers.WebPageParser;
 import lombok.Data;
 import org.jsoup.nodes.Element;
@@ -13,15 +14,6 @@ import java.util.stream.Collectors;
 @Component
 @Data
 public class IdTechGenreParser implements WebPageParser {
-    private Elements parsedPage;
-    private List<Element> genreNames;
-    private List<Element> subGenNames;
-    private List<Integer> genreIndexList;
-    private List<Integer> subGenIndexList;
-    private List<Element> genreDescript;
-    private List<Element> subGenDescript;
-    private Map<String, String> genreDescMap;
-    private Map<String, String> subGenDescMap;
 
     private final String url = "https://www.idtech.com/blog/different-types-of-video-game-genres";
     private final String selectQuery = "#blog-post-content > p, #blog-post-content > h3, #blog-post-content > h4";
@@ -30,63 +22,46 @@ public class IdTechGenreParser implements WebPageParser {
     private final String genreNamesCss = "h3";
     private final String subGenCss = "h4";
 
+    private WebPage page = new WebPage();
+
 
     @Override
     public Map<String, String> createGenreMap() {
-        if (genreDescMap == null) {
-            processFields();
-            genreDescMap = createMap(genreNames, genreDescript);
-            genreDescMap.putAll(subGenDescMap);
+
+        try {
+            processPage();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        Map<String, String> genreDescMap = page.getGenreDescMap();
+        genreDescMap.putAll(page.getSubGenDescMap());
+
         return genreDescMap;
     }
 
 
-    public Map<String, String> updateGenreMap() {
-        resetValues();
-        return createGenreMap();
-    }
+    private void processPage() throws IOException {
 
-
-    private void processFields() {
-        try {
-            parsedPage = parsePage(url, selectQuery);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        genreNames = parsedPage
+        page.setParsedPage(parsePage(url, selectQuery));
+        page.setGenreNames(page.getParsedPage()
                 .select(genreNamesCss)
                 .stream()
                 .filter(e -> e.text().length() > 2)
-                .collect(Collectors.toList());
-        genreIndexList = createKeyIndexes(parsedPage, genreNames);
-        genreDescript = parseDescriptions(parsedPage, genreIndexList);
+                .collect(Collectors.toList()));
+        page.setGenreIndexList(createKeyIndexes(page.getParsedPage(), page.getGenreNames()));
+        page.setGenreDescript(parseDescriptions(page.getParsedPage(), page.getGenreIndexList()));
+        page.setGenreDescMap(createMap(page.getGenreNames(), page.getGenreDescript()));
 
-        subGenNames = parsedPage
+        page.setSubGenNames(page.getParsedPage()
                 .select(subGenCss)
                 .stream()
                 .filter(e -> !e.text().equals("Types of RPG Games:"))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
+        page.setSubGenIndexList(createKeyIndexes(page.getParsedPage(), page.getSubGenNames()));
+        page.setSubGenDescript(parseSubGenDesc(page.getParsedPage(), page.getSubGenIndexList(), page.getGenreIndexList()));
 
-        subGenIndexList = createKeyIndexes(parsedPage, subGenNames);
-        subGenDescript = parseSubGenDesc(parsedPage, subGenIndexList, genreIndexList);
-
-        subGenDescMap = createMap(subGenNames, subGenDescript);
-    }
-
-
-    private void resetValues() {
-        setParsedPage(null);
-        setGenreDescMap(null);
-        setSubGenDescMap(null);
-
-        setGenreNames(null);
-        setGenreIndexList(null);
-        setGenreDescript(null);
-
-        setSubGenNames(null);
-        setSubGenIndexList(null);
-        setSubGenDescript(null);
+        page.setSubGenDescMap(createMap(page.getSubGenNames(), page.getSubGenDescript()));
     }
 
 

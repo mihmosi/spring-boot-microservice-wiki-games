@@ -1,10 +1,16 @@
 package com.jm.wikigames.parser.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.util.List;
 import java.util.Map;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class WebPage {
     private Elements parsedPage;
     private List<Element> genreNames;
