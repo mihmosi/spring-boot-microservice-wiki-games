@@ -1,8 +1,10 @@
 package com.jm.wikigames.userservice.service;
 
+import com.jm.wikigames.userservice.dto.UserDTO;
 import com.jm.wikigames.userservice.model.UserModel;
 import com.jm.wikigames.userservice.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -23,6 +26,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserModel create(UserModel userModel) {
         userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
         return userRepository.save(userModel);
+    }
+
+    @Override
+    @Transactional
+    public void edit(UserDTO userDTO) throws EntityNotFoundException, DataIntegrityViolationException {
+        UserModel userModel = userRepository.getById(userDTO.getId());
+        userModel.setName(userDTO.getName());
+        userModel.setEmail(userDTO.getEmail());
+        userModel.setRoles(userDTO.getRoles());
+        userRepository.saveAndFlush(userModel);
     }
 
     @Override

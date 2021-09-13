@@ -23,6 +23,8 @@ public class UserModel implements UserDetails {
     private Long id;
     private String name;
     private String password;
+
+    @Column (unique = true)
     private String email;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
