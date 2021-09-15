@@ -9,7 +9,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserCreatingDto {
+public class UserCreatingDTO {
 
     private String name;
     private String password;
