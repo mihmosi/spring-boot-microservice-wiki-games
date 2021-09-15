@@ -13,6 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"id","name"})
 @Builder
+
 public class GameItem {
 
     @Id
@@ -20,12 +21,18 @@ public class GameItem {
     private Long id;
     @NonNull
     private String name;
-    private String dateOfCreation;
-    private String genre;
-    private String heroes;
-    private String villains;
+    @Embedded
+    private Inside inside;
+    @Embedded
+    private Outside outside;
+
+    //private String dateOfCreation;
+    //private String genre;
+    //private String heroes;
+    //private String villains;
 
     @Convert(converter = StatusEnumToStringConverter.class)
     private Status status;
+    private String link;
 
 }

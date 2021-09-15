@@ -16,6 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Embeddable
 public class Outside {
 
     @Enumerated(EnumType.STRING)

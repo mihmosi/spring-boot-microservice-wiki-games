@@ -25,7 +25,7 @@ public class JenaralItemControllerUnitTest {
     @MockBean
     private GameItemService itemService;
 
-    @Test
+    /*@Test
     public void itemGame_whenAdd() throws Exception {
         GameItem itemGame = GameItem.builder()
             .name("warcraft")
@@ -42,7 +42,7 @@ public class JenaralItemControllerUnitTest {
                 .andExpect(jsonPath("$.genre").value("strategy"));
     }
 
-    /* @Test
+     @Test
     public void itemGame_getByName() throws Exception {
         GeneralItemGame itemGame = GeneralItemGame.builder()
             .name("warcraft")
@@ -70,7 +70,7 @@ public class JenaralItemControllerUnitTest {
                 .andExpect(jsonPath("$.id").value(3))
                 .andExpect(jsonPath("$.name").value("warcraft"))
                 .andExpect(jsonPath("$.genre").value("strategy"));
-    }*/
+    }
     
 
     @Test
@@ -87,5 +87,5 @@ public class JenaralItemControllerUnitTest {
         mockMvc.perform(
                 get("/api/items"))
                 .andExpect(content().json(objectMapper.writeValueAsString(Arrays.asList(itemGame, itemGame1))));
-    }
+    }*/
 }

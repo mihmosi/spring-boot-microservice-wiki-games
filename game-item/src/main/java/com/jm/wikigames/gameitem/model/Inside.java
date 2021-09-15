@@ -11,13 +11,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Embeddable
 public class Inside {
 
     private List<Character> characters;
 
     private String lore;
 
-    private String originalSourse;
+    private String originalSource;
 
     @Enumerated(EnumType.STRING)
     private Genre genre;
