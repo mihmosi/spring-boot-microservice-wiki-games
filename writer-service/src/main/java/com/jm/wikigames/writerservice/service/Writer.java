@@ -4,7 +4,7 @@ import com.jm.wikigames.writerservice.dto.GameItemDTO;
 
 public interface Writer {
 
-    String writeToJSON(GameItemDTO gameItemDTO);
+    void writeToJSON(GameItemDTO gameItemDTO);
 
     String writeToXML(GameItemDTO gameItemDTO);
 
