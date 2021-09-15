@@ -20,7 +20,7 @@ public class GameItemController {
 	}
 
 	@PostMapping("/items")
-	public ResponseEntity<?> addItem(@RequestBody GameItemDTO gameItemDTO) {
+	public GameItemDTO addItem(@RequestBody GameItemDTO gameItemDTO) {
 		GameItem gameItem = new GameItem();
 		gameItem.setName(gameItemDTO.getName());
 		gameItem.setDateOfCreation(gameItemDTO.getDateOfCreation());
@@ -28,8 +28,8 @@ public class GameItemController {
 		gameItem.setHeroes(gameItemDTO.getHeroes());
 		gameItem.setVillains(gameItemDTO.getVillains());
 		gameItem.setStatus(gameItemDTO.getStatus());
-		GameItem result = gameItemService.create(gameItem);
-		return new ResponseEntity<> (result.getId(), HttpStatus.OK);
+		gameItemService.create(gameItem);
+		return gameItemDTO;
 	}
 	
 	@GetMapping("/items")

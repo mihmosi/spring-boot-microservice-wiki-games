@@ -30,12 +30,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional
-    public void edit(UserDTO userDTO) throws EntityNotFoundException, DataIntegrityViolationException {
+    public UserDTO edit(UserDTO userDTO) throws EntityNotFoundException, DataIntegrityViolationException {
         UserModel userModel = userRepository.getById(userDTO.getId());
         userModel.setName(userDTO.getName());
         userModel.setEmail(userDTO.getEmail());
         userModel.setRoles(userDTO.getRoles());
         userRepository.saveAndFlush(userModel);
+        return userDTO;
     }
 
     @Override

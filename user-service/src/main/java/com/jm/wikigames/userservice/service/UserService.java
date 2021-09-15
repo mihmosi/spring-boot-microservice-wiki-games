@@ -10,7 +10,7 @@ public interface UserService {
 
     UserModel create(UserModel userModel);
 
-    void edit (UserDTO userDTO);
+    UserDTO edit (UserDTO userDTO);
 
     List<UserModel> getAllUsers();
 

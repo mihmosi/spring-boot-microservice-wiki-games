@@ -1,6 +1,7 @@
 package com.jm.wikigames.gameitem.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jm.wikigames.gameitem.dto.GameItemDTO;
 import com.jm.wikigames.gameitem.model.GameItem;
 import com.jm.wikigames.gameitem.services.GameItemService;
 import org.junit.jupiter.api.Test;
@@ -25,22 +26,22 @@ public class JenaralItemControllerUnitTest {
     @MockBean
     private GameItemService itemService;
 
-    @Test
-    public void itemGame_whenAdd() throws Exception {
-        GameItem itemGame = GameItem.builder()
-            .name("warcraft")
-            .genre("strategy")
-            .build();
-        Mockito.when(itemService.create(Mockito.any())).thenReturn(itemGame);
-        mockMvc.perform(
-                post("/api/items")
-                        .content(objectMapper.writeValueAsString(itemGame))
-                        .contentType(MediaType.APPLICATION_JSON)
-        )
-                .andExpect(content().json(objectMapper.writeValueAsString(itemGame)))
-                .andExpect(jsonPath("$.name").value("warcraft"))
-                .andExpect(jsonPath("$.genre").value("strategy"));
-    }
+//    @Test
+//    public void itemGame_whenAdd() throws Exception {
+//        GameItem itemGame = GameItem.builder()
+//            .name("warcraft")
+//            .genre("strategy")
+//            .build();
+//        Mockito.when(itemService.create(Mockito.any())).thenReturn(itemGame);
+//        mockMvc.perform(
+//                post("/api/items")
+//                        .content(objectMapper.writeValueAsString(itemGame))
+//                        .contentType(MediaType.APPLICATION_JSON)
+//        )
+//                .andExpect(content().json(objectMapper.writeValueAsString(itemGame)))
+//                .andExpect(jsonPath("$.name").value("warcraft"))
+//                .andExpect(jsonPath("$.genre").value("strategy"));
+//    }
 
     /* @Test
     public void itemGame_getByName() throws Exception {

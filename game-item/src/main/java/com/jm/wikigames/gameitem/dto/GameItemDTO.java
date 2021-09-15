@@ -2,12 +2,14 @@ package com.jm.wikigames.gameitem.dto;
 
 import com.jm.wikigames.gameitem.model.enums.Status;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class GameItemDTO {
 
     private String name;
