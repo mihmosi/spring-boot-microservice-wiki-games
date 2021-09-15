@@ -1,21 +1,22 @@
-package com.jm.wikigames.gameitem.parsers;
+package com.jm.wikigames.parser.parsers;
 
-import lombok.Data;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Data
-public abstract class AbstractWebPageParser {
-    private final String userAgent = "Chrome/92.0.4515.159";
-    private final String referrer = "http://www.google.com";
+@Component
+public interface WebPageParser {
+    String userAgent = "Chrome/92.0.4515.159";
+    String referrer = "http://www.google.com";
 
+    Map<String, String> createGenreMap();
 
-    public Elements parsePage(String url, String cssQuery) throws IOException {
+    default Elements parsePage(String url, String cssQuery) throws IOException {
         return Jsoup
                 .connect(url)
                 .userAgent(userAgent)
@@ -24,8 +25,7 @@ public abstract class AbstractWebPageParser {
                 .select(cssQuery);
     }
 
-
-    public Map<String, String> createMap(List<Element> names, List<Element> descriptions) {
+    default Map<String, String> createMap(List<Element> names, List<Element> descriptions) {
         Map<String, String> map = new HashMap<>();
 
         for (int i = 0; i < names.size(); i++) {
