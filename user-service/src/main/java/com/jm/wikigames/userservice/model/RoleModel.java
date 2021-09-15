@@ -1,35 +1,46 @@
 package com.jm.wikigames.userservice.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "roles")
 public class RoleModel implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String nameRole;
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_role"
-            , joinColumns = @JoinColumn(name = "role_id")
-            , inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private List<UserModel> users;
+    @Transient
+    @ManyToMany(mappedBy = "roles")
+    @ToString.Exclude
+    private Set<UserModel> users;
 
     @Override
     public String getAuthority() {
         return this.nameRole;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RoleModel roleModel = (RoleModel) o;
+        return Objects.equals(getId(), roleModel.getId()) && Objects.equals(getNameRole(), roleModel.getNameRole());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getNameRole());
     }
 }
