@@ -9,9 +9,10 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class UserCreatingDTO {
 
     private String name;
+    private String password;
     private String email;
     private Set<RoleModel> roles;
 

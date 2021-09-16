@@ -1,7 +1,6 @@
 package com.jm.wikigames.userservice.model;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,7 +13,6 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
 public class UserModel implements UserDetails {
@@ -35,6 +33,13 @@ public class UserModel implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "roles_id"))
     @ToString.Exclude
     private Set<RoleModel> roles;
+
+    public UserModel(String name, String password, String email, Set<RoleModel>roles){
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.roles = roles;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
