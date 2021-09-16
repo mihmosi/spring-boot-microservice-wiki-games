@@ -1,7 +1,5 @@
 package com.jm.wikigames.userservice.service;
 
-import com.jm.wikigames.userservice.dto.UserCreatingDTO;
-import com.jm.wikigames.userservice.mapper.UserMapper;
 import com.jm.wikigames.userservice.model.UserModel;
 import com.jm.wikigames.userservice.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -22,9 +20,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UserModel create(UserCreatingDTO userCreatingDto) {
-        userCreatingDto.setPassword(passwordEncoder.encode(userCreatingDto.getPassword()));
-        return userRepository.save(new UserMapper().toUser(userCreatingDto));
+    public UserModel create(UserModel userModel) {
+        userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
+        return userRepository.save(userModel);
     }
 
     @Override

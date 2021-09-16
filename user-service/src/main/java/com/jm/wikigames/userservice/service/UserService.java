@@ -1,6 +1,5 @@
 package com.jm.wikigames.userservice.service;
 
-import com.jm.wikigames.userservice.dto.UserCreatingDTO;
 import com.jm.wikigames.userservice.model.UserModel;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,7 +7,7 @@ import java.util.List;
 
 public interface UserService {
 
-    UserModel create(UserCreatingDTO userCreatingDto);
+    UserModel create(UserModel userModel);
 
     List<UserModel> getAllUsers();
 
