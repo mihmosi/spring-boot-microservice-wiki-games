@@ -1,6 +1,6 @@
 package com.jm.wikigames.userservice.service;
 
-import com.jm.wikigames.userservice.dto.UserDTO;
+import com.jm.wikigames.userservice.dto.UserCreatingDTO;
 import com.jm.wikigames.userservice.model.UserModel;
 import com.jm.wikigames.userservice.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -30,13 +30,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional
-    public UserDTO update(UserDTO userDTO) throws EntityNotFoundException, DataIntegrityViolationException {
-        UserModel userModel = userRepository.findByName(userDTO.getName());
-        userModel.setName(userDTO.getName());
-        userModel.setEmail(userDTO.getEmail());
-        userModel.setRoles(userDTO.getRoles());
-        userRepository.saveAndFlush(userModel);
-        return userDTO;
+    public UserModel update(UserCreatingDTO creatingDTO) throws EntityNotFoundException, DataIntegrityViolationException {
+        UserModel userModel = userRepository.findByName(creatingDTO.getName());
+        userModel.setName(creatingDTO.getName());
+        userModel.setPassword(passwordEncoder.encode(creatingDTO.getPassword()));
+        userModel.setEmail(creatingDTO.getEmail());
+        userModel.setRoles(creatingDTO.getRoles());
+        return userRepository.saveAndFlush(userModel);
     }
 
     @Override
