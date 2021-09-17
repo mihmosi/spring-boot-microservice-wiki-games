@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserService {
 
-    UserModel create(UserModel userModel);
+    UserModel create(UserCreatingDTO userCreatingDTO);
 
     UserModel update(UserCreatingDTO userDTO);
 
