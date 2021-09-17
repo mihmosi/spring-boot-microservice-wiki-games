@@ -20,7 +20,6 @@ public class GameItemServiceImpl implements GameItemService {
     @Override
     @Transactional
     public GameItem create(GameItem item) {
-//        TODO: создаать мапер gameItem to dto.
         return gameItemRepository.save(item);
     }
 
