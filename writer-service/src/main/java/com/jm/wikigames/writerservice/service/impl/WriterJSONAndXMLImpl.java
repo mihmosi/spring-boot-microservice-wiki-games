@@ -10,6 +10,7 @@ import com.jm.wikigames.writerservice.dto.model.Outside;
 import com.jm.wikigames.writerservice.service.WriterJSONAndXML;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ import java.io.IOException;
 @Service
 public class WriterJSONAndXMLImpl implements WriterJSONAndXML {
 
-    private static final String relativePathToJSONFile = "writer-service/src/main/resources/json/gameItemDto.json";
+    private static final String relativePathToJSONFile = "../writer-service/src/main/resources/json/gameItemDto.json";
     private ObjectMapper objectMapper;
     private GameItem gameItem;
     private Inside inside;
@@ -34,6 +35,29 @@ public class WriterJSONAndXMLImpl implements WriterJSONAndXML {
 
         File jsonFile = new File(relativePathToJSONFile);
 
+        try {
+            objectMapper.writeValue(jsonFile, getGameItemInsideOutsideDTO(gameItemDTO));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String json = null;
+
+        try {
+            json = objectMapper.writeValueAsString(getGameItemInsideOutsideDTO(gameItemDTO));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return json;
+    }
+
+    @Override
+    public String writeToXML(GameItem gameItemDTO) {
+        return null;
+    }
+
+    GameItemInsideOutsideDTO getGameItemInsideOutsideDTO(GameItemDTO gameItemDTO){
         gameItem.setName(gameItemDTO.getName());
         gameItem.setDateOfCreation(gameItemDTO.getDateOfCreation());
         gameItem.setGenre(gameItemDTO.getGenre());
@@ -56,25 +80,6 @@ public class WriterJSONAndXMLImpl implements WriterJSONAndXML {
         gameItemInsideOutsideDTO.setOutside(outside);
         gameItemInsideOutsideDTO.setLink(gameItemDTO.getLink());
 
-        try {
-            objectMapper.writeValue(jsonFile, gameItemInsideOutsideDTO);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String json = null;
-
-        try {
-            json = objectMapper.writeValueAsString(gameItemInsideOutsideDTO);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        return json;
-    }
-
-    @Override
-    public String writeToXML(GameItem gameItemDTO) {
-        return null;
+        return gameItemInsideOutsideDTO;
     }
 }

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class GameItemInsideOutsideDTO {
 
     private GameItem gameItem;
-    private Inside inside;
     private Outside outside;
+    private Inside inside;
     private String link;
 }
