@@ -7,6 +7,6 @@ public interface WriterJSONAndXML {
 
     String writeToJSON(GameItemDTO gameItemDTO);
 
-    String writeToXML(GameItem gameItemDTO);
+    String writeToXML(GameItemDTO gameItemDTO);
 
 }

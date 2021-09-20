@@ -40,6 +40,19 @@ class WriterJSONAndXMLImplTest {
     }
 
     @Test
+    public void writeToXML () {
+        String result = writerJSONAndXML.writeToXML(gameItemDTO);
+        String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "<GameItemInsideOutsideDTO><gameItem><name>StarCraft 2</name><dateOfCreation>2020-12-12</dateOfCreation><genre>Strategy</genre><heroes>Raynor</heroes><villains>none</villains><status>in progress</status></gameItem><outside><platform>PC</platform><distributor>Blizzard</distributor><gameUniversity>StarCraft</gameUniversity><outsideGenre>First Genre</outsideGenre><systemRequirements>medium</systemRequirements><gameMode>First gamemode</gameMode></outside><inside><lore>Cosmos</lore><originalSource>Blizzard</originalSource></inside><link>www.starcraft.com</link></GameItemInsideOutsideDTO>";
+        assertEquals(expected, result);
+        try {
+            Files.delete(Path.of("../writer-service/src/main/resources/xml/gameItemDTO.xml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     void writeToJSON() {
 
         String actual = "{\"gameItem\":{\"name\":\"StarCraft 2\",\"dateOfCreation\":\"2020-12-12\",\"genre\":" +

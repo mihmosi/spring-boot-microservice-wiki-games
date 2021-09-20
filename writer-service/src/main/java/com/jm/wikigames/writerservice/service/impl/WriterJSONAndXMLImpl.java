@@ -2,6 +2,7 @@ package com.jm.wikigames.writerservice.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.jm.wikigames.writerservice.dto.GameItemDTO;
 import com.jm.wikigames.writerservice.dto.GameItemInsideOutsideDTO;
 import com.jm.wikigames.writerservice.dto.model.GameItem;
@@ -16,6 +17,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.FileSystems;
+import java.util.Arrays;
 
 @Setter
 @Getter
@@ -53,8 +57,18 @@ public class WriterJSONAndXMLImpl implements WriterJSONAndXML {
     }
 
     @Override
-    public String writeToXML(GameItem gameItemDTO) {
-        return null;
+    public String writeToXML(GameItemDTO gameItemDTO) {
+        String filePath = String.join(FileSystems.getDefault().getSeparator(), Arrays.asList("..", "writer-service", "src", "main", "resources", "xml", "gameItemDTO.xml"));
+        File file = new File(filePath);
+        String xml = null;
+        try (java.io.Writer writer = new PrintWriter(file)){
+            file.createNewFile();
+            xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + new XmlMapper().writeValueAsString(getGameItemInsideOutsideDTO(gameItemDTO));
+            writer.write(xml);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return xml;
     }
 
     GameItemInsideOutsideDTO getGameItemInsideOutsideDTO(GameItemDTO gameItemDTO){
