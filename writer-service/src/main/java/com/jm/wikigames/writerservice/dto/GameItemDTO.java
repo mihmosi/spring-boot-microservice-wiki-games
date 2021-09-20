@@ -1,11 +1,13 @@
 package com.jm.wikigames.writerservice.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.stereotype.Component;
 
-@Data
-@AllArgsConstructor
+@Setter
+@Getter
+@Component
 @NoArgsConstructor
 public class GameItemDTO {
 
