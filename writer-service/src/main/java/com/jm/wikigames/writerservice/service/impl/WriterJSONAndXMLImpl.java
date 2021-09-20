@@ -1,5 +1,6 @@
 package com.jm.wikigames.writerservice.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jm.wikigames.writerservice.dto.GameItemDTO;
 import com.jm.wikigames.writerservice.dto.GameItemInsideOutsideDTO;
@@ -60,7 +61,16 @@ public class WriterJSONAndXMLImpl implements WriterJSONAndXML {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return relativePathToJSONFile;
+
+        String json = null;
+
+        try {
+            json = objectMapper.writeValueAsString(gameItemInsideOutsideDTO);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return json;
     }
 
     @Override
