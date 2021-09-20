@@ -25,6 +25,7 @@ public class GameItem {
     private Inside inside;
     @Embedded
     private Outside outside;
+    //pull
 
     //private String dateOfCreation;
     //private String genre;
