@@ -2,12 +2,14 @@ package com.jm.wikigames.gameitem.dto;
 
 import com.jm.wikigames.gameitem.model.enums.Status;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class GameItemDTO {
 
     private String name;
@@ -23,6 +25,7 @@ public class GameItemDTO {
     private String gameMode; //new - режим игры ( одиночная, кооператив...)
     private String heroes; //возможно лишнее, не перечислено в ТЗ
     private String villains; //возможно лишнее, не перечислено в ТЗ
+//    TODO: Поменять Status на String
     private Status status;
     private String link; //new
 

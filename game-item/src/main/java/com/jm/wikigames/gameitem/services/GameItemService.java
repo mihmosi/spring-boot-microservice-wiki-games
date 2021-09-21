@@ -5,6 +5,7 @@ import com.jm.wikigames.gameitem.model.GameItem;
 import java.util.List;
 
 public interface GameItemService {
+//    TODO: Заменить на GameItemDto
     GameItem create(GameItem item);
 
     List<GameItem> getAllItems();

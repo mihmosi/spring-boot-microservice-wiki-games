@@ -1,8 +1,11 @@
 package com.jm.wikigames.userservice.service;
 
+import com.jm.wikigames.userservice.dto.UserCreatingDTO;
+import com.jm.wikigames.userservice.mapper.UserMapper;
 import com.jm.wikigames.userservice.model.UserModel;
 import com.jm.wikigames.userservice.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -20,9 +24,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UserModel create(UserModel userModel) {
-        userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
-        return userRepository.save(userModel);
+    public UserModel create(UserCreatingDTO userCreatingDTO) {
+        userCreatingDTO.setPassword(passwordEncoder.encode(userCreatingDTO.getPassword()));
+        return userRepository.save(new UserMapper().toUser(userCreatingDTO));
+    }
+
+    @Override
+    @Transactional
+    public UserModel update(UserCreatingDTO creatingDTO) throws EntityNotFoundException, DataIntegrityViolationException {
+        UserModel userModel = userRepository.findByName(creatingDTO.getName());
+        userModel.setName(creatingDTO.getName());
+        userModel.setPassword(passwordEncoder.encode(creatingDTO.getPassword()));
+        userModel.setEmail(creatingDTO.getEmail());
+        userModel.setRoles(creatingDTO.getRoles());
+        return userRepository.saveAndFlush(userModel);
     }
 
     @Override
@@ -51,8 +66,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         UserModel myUser = userRepository.findByName(s);
-        if (s == null) {
-            throw new UsernameNotFoundException("Unknown user: "+s);
+        if (myUser == null) {
+            throw new UsernameNotFoundException("Unknown user: " + s);
         }
         return myUser;
     }

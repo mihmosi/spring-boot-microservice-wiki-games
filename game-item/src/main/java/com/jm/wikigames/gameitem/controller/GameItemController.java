@@ -3,6 +3,8 @@ package com.jm.wikigames.gameitem.controller;
 import com.jm.wikigames.gameitem.dto.GameItemDTO;
 import com.jm.wikigames.gameitem.model.GameItem;
 import com.jm.wikigames.gameitem.services.GameItemService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +21,15 @@ public class GameItemController {
 
 	@PostMapping("/items")
 	public GameItemDTO addItem(@RequestBody GameItemDTO gameItemDTO) {
-		return gameItemService.create(gameItemDTO);
+		GameItem gameItem = new GameItem();
+		gameItem.setName(gameItemDTO.getName());
+		gameItem.setDateOfCreation(gameItemDTO.getDateOfCreation());
+		gameItem.setGenre(gameItemDTO.getGenre());
+		gameItem.setHeroes(gameItemDTO.getHeroes());
+		gameItem.setVillains(gameItemDTO.getVillains());
+		gameItem.setStatus(gameItemDTO.getStatus());
+		gameItemService.create(gameItem);
+		return gameItemDTO;
 	}
 	
 	@GetMapping("/items")
